@@ -1,0 +1,9 @@
+{
+    "error_repsonse": {
+        "location": {
+            "getLocations": {
+                "en": "The following error occured trying to access locations:"
+            }
+        }
+    }
+}
