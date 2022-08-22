@@ -1,6 +1,6 @@
 /*
  * Filename: SimpleResponseModel.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Thursday May 26th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White

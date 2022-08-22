@@ -30,8 +30,10 @@
  * 
  */
 
-import {locactions} from "locactions"
+import {locactions} from "./locations"
+import {mapsets} from "./mapsets"
 
 export {
-    locactions
+    locactions,
+    mapsets
 }

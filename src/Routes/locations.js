@@ -44,7 +44,7 @@ const API_HOST = SETTINGS.API_HOST;
 const Locations = {
     getLocations: (async (options={}) => {
         /**
-         * This response returns a list of location names
+         * Get a list of all available locations that are located in the GRASS database and the user has access to. Minimum required user role: user.
          * Route: /locations/
          * Returns: LocationListResponseModel
         */
@@ -56,36 +56,39 @@ const Locations = {
                 },
                 ...options
             });
-            let status = await res.status()
+            
             let data = await res.json()
-            if (status === 200) return new LocationsListResponseModel({...data.response});
-            if (status === 400) return new SimpleResponseModel({...data.response});                  
+            if (res.ok) return new LocationsListResponseModel({...data.response});
+            return new SimpleResponseModel({...data.response});                
         } catch (err) {
-            console.log(`${RESPONSESTRINGS.error_repsonse.location.getLocations[SETTINGS.LANGUAGE]} ${err}`);
+            console.error(`${RESPONSESTRINGS.errorRepsonse.location.getLocations[SETTINGS.LANGUAGE]} ${err}`);
         }
     }),
-    getLocation: async (locationName) => {
+    getLocation: (async (locationName, options={}) => {
         /**
-        * Route: /locations/{location_name}/info
+         * Get the location projection and current computational region of the PERMANENT mapset. Minimum required user role: user.
+         * Route: /locations/{location_name}/info
         */
           try {
             const url = new URL(`${API_HOST}/g/locations/${locationName}/info`)
             let res = await fetch(url, { 
                 headers: {
                 'Content-Type': 'application/json'
-                }
+                },
+                ...options
             });
             let data = await res.json();
-            
-            console.log("getLocation: response:", data)
-            return new ProcessResponseModel({...data.response})                        
-        } catch (e) {
-            console.error("getLocation: error", e);
+            if (res.ok) return new ProcessResponseModel({...data.response});
+            return new SimpleResponseModel({...data.response}); 
+                                                
+        } catch (err) {
+            console.error(`${RESPONSESTRINGS.errorRepsonse.location.getLocation[SETTINGS.LANGUAGE]} ${err}`);
         }
-    },
-    createLocation: (async (locationName, epsg) => {
+    }),
+    createLocation: (async (locationName, epsg, options={}) => {
         /**
-        * Route: /locations/{location_name}/
+         * Create a new location based on EPSG code in the user database. Minimum required user role: user.
+         * Route: /locations/{location_name}/
         */
           try {
             // let queryParams = {un: params.unId}
@@ -95,35 +98,35 @@ const Locations = {
                 body: JSON.stringify({epsg: epsg}),
                 headers: {
                 'Content-Type': 'application/json'
-                }
+                },
+                ...options
             });
             let data = await res.json();
-            let results = await data.process_results
-            console.log("createLocation: response:", data)
-            return results                         
-        } catch (e) {
-            console.error("getLocation: error", e);
+            if (res.ok) return new ProcessResponseModel({...data.response});
+            return new ProcessResponseModel({...data.response});                       
+        } catch (err) {
+            console.error(`${RESPONSESTRINGS.errorRepsonse.location.createLocation[SETTINGS.LANGUAGE]} ${err}`);
         }
     }),
-    deleteLocation: (async (locationName) => {
+    deleteLocation: (async (locationName, options={}) => {
         /**
-        * Route: /locations/{location_name}/
+         * Delete an existing location and everything inside from the user database. Minimum required user role: user.
+         * Route: /locations/{location_name}/
         */
           try {
-            // let queryParams = {un: params.unId}
             const url = new URL(`${API_HOST}/g/locations/${locationName}`)
             let res = await fetch(url, { 
                 method: "DELETE",
                 headers: {
                 'Content-Type': 'application/json'
-                }
+                },
+                ...options
             });
             let data = await res.json();
-            let results = await data.process_results
-            console.log("createLocation: response:", data)
-            return results                         
-        } catch (e) {
-            console.error("getLocation: error", e);
+            if (res.ok) return new SimpleResponseModel({...data.response});
+            return new SimpleResponseModel({...data.response});                       
+        } catch (err) {
+            console.error(`${RESPONSESTRINGS.errorRepsonse.location.deleteLocation[SETTINGS.LANGUAGE]} ${err}`);
         }
     })
 }

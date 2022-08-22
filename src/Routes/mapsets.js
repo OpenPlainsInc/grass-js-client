@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri Aug 19 2022
+ * Last Modified: Sat Aug 20 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -30,4 +30,165 @@
  * 
  */
 
+import { SETTINGS } from "../settings.json"
+import { RESPONSESTRINGS } from "../strings.json"
+import { 
+    ProcessResponseModel,
+    MapsetInfoResponseModel, 
+    SimpleResponseModel
+} from "../Models"
 
+const API_HOST = `${SETTINGS.API_HOST}/g/locations`;
+const MAPSET_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.mapset
+
+
+const Mapsets = {
+    getMapsets: (async (locationName, options={}) => {
+        /**
+         * Get a list of all mapsets that are located in a specific location. Minimum required user role: user.
+         * Route: /locations/{location_name}/mapsets
+        */
+        try {
+            const url = new URL(`${API_HOST}/${locationName}/mapsets`)
+            let res = await fetch(url, { 
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                ...options
+            });
+           
+            let data = await res.json();
+            if (res.ok) return new ProcessResponseModel({...data.response}); // TODO: Update model to StringListProcessingResultResponseModel
+            return new SimpleResponseModel({...data.response}); // TODO: Update model to ProcessingErrorResponseModel                      
+        } catch (err) {
+            console.error(`${MAPSET_ERROR_RESPONSE.getMapsets[SETTINGS.LANGUAGE]} ${err}`);
+        }
+    }),
+    getMapset: (async (locationName, mapsetName, options={}) => {
+        /**
+         * The current computational region of the mapset and the projection of the location
+         * Route: /locations/{location_name}/mapsets
+        */
+        try {
+            const url = new URL(`${API_HOST}/${locationName}/mapsets/${mapsetName}/info`)
+            let res = await fetch(url, { 
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                ...options
+            });
+            let data = await res.json()
+            if (res.ok) return new MapsetInfoResponseModel({...data.response});
+            return new SimpleResponseModel({...data.response}); // TODO: Update model to ProcessingErrorResponseModel                    
+          } catch (err) {
+            console.error(`${MAPSET_ERROR_RESPONSE.getMapset[SETTINGS.LANGUAGE]} ${err}`);
+        }
+    }),
+    createMapset: (async (locationName, mapsetName, options={}) => {
+        /**
+         * Create a new mapset in an existing location. Minimum required user role: user.
+         * Route: /locations/{location_name}/mapsets
+        */
+        try {
+            const url = new URL(`${API_HOST}/${locationName}/mapsets/${mapsetName}`)
+            let res = await fetch(url, { 
+                method: "POST",
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                ...options
+            });
+            let data = await res.json()
+            if (res.ok) return new ProcessResponseModel({...data.response});
+            return new SimpleResponseModel({...data.response}); // TODO: Update model to ProcessingErrorResponseModel                  
+          } catch (err) {
+            console.error(`${MAPSET_ERROR_RESPONSE.createMapset[SETTINGS.LANGUAGE]} ${err}`);
+
+        }
+    }),
+    deleteMapset: (async (locationName, mapsetName, options={}) => {
+        /**
+         * Delete an existing mapset. Minimum required user role: user.
+         * Route: /locations/{location_name}/mapsets/{mapset_name}
+        */
+        try {
+            const url = new URL(`${API_HOST}/${locationName}/mapsets/${mapsetName}`)
+            let res = await fetch(url, { 
+                method: "DELETE",
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+            let data = await res.json()
+            if (res.ok) return new ProcessResponseModel({...data.response});
+            return new SimpleResponseModel({...data.response}); // TODO: Update model to ProcessingErrorResponseModel                   
+          } catch (err) {
+            console.error(`${MAPSET_ERROR_RESPONSE.deleteMapset[SETTINGS.LANGUAGE]} ${err}`);
+        }
+    }),
+    getLock: (async (locationName, mapsetName, options={}) => {
+        /**
+         * Get the location/mapset lock status. Minimum required user role: admin.
+         * Route: /locations/{location_name}/mapsets/{mapset_name}
+        */
+        try {
+            const url = new URL(`${API_HOST}/${locationName}/mapsets/${mapsetName}`)
+            let res = await fetch(url, { 
+                method: "GET",
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                ...options
+            });
+            let data = await res.json()
+            if (res.ok) return new ProcessResponseModel({...data.response}); // TODO: Updaet model to MapsetLockManagementResponseModel
+            return new ProcessResponseModel({...data.response});               
+          } catch (err) {
+            console.error(`${MAPSET_ERROR_RESPONSE.deleteMapset[SETTINGS.LANGUAGE]} ${err}`);
+        }
+    }),
+    createLock: (async (locationName, mapsetName, options={}) => {
+        /**
+         * Create a location/mapset lock. A location/mapset lock can be created so that no operation can be performed on it until it is unlocked. Minimum required user role: admin.
+         * Route: /locations/{location_name}/mapsets/{mapset_name}/lock
+        */
+        try {
+            const url = new URL(`${API_HOST}/${locationName}/mapsets/${mapsetName}/lock`)
+            let res = await fetch(url, { 
+                method: "POST",
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                ...options
+            });
+            let data = await res.json()
+            if (res.ok) return new ProcessResponseModel({...data.response});
+            return new ProcessResponseModel({...data.response});                   
+          } catch (err) {
+            console.error(`${MAPSET_ERROR_RESPONSE.createMapsetLock[SETTINGS.LANGUAGE]} ${err}`);
+        }
+    }),
+    deleteLock: (async (locationName, mapsetName, options={}) => {
+        /**
+         * Delete a location/mapset lock. A location/mapset lock can be deleted so that operation can be performed on it until it is locked. Minimum required user role: admin.
+         * Route: /locations/{location_name}/mapsets/{mapset_name}
+        */
+        try {
+            const url = new URL(`${API_HOST}/${locationName}/mapsets/${mapsetName}/lock`)
+            let res = await fetch(url, { 
+                method: "DELETE",
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                ...options
+            });
+            let data = await res.json()
+            if (res.ok) return new ProcessResponseModel({...data.response});
+            return new ProcessResponseModel({...data.response});              
+          } catch (err) {
+            console.error(`${MAPSET_ERROR_RESPONSE.deleteMapsetLock[SETTINGS.LANGUAGE]} ${err}`);
+        }
+    })
+}
+
+export default Mapsets

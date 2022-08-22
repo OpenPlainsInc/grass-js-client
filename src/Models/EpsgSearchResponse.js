@@ -1,11 +1,11 @@
 /*
  * Filename: EpsgSearchResponse.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Thursday May 26th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri May 27 2022
+ * Last Modified: Fri Aug 19 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
