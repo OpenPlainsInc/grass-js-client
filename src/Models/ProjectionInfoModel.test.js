@@ -1,11 +1,11 @@
 /*
  * Filename: ProjectionInfoModel.test.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Thursday May 26th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri May 27 2022
+ * Last Modified: Sat Sep 03 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -33,6 +33,20 @@
 import { ProjectionInfoModel } from './ProjectionInfoModel';
 import { EpsgSearchResponse } from './EpsgSearchResponse';
 import { EpsgInfo } from './EpsgInfo';
+
+
+function setupFetchStub(data) {
+    return function fetchStub(_url) {
+      return new Promise((resolve) => {
+        resolve({
+          json: () =>
+            Promise.resolve({
+                ...data,
+            }),
+        })
+      })
+    }
+  }
 
 const MOCK_EPSG_RESPONSE = {
     "status": "ok", 
@@ -72,19 +86,21 @@ describe("ProjectionInfoModel", ()=> {
     })
 
     test('ProjectionInfoModel.searchEpsg(4326) searches epsg.io and returns data', async () => {
-        const fetchMock = jest
-            .spyOn(global, 'fetch')
-            .mockImplementation(() =>
-            Promise.resolve({ json: () => Promise.resolve({...MOCK_EPSG_RESPONSE}) })
-        )
+        
+        global.fetch = jest.fn().mockImplementation(setupFetchStub(MOCK_EPSG_RESPONSE))
         const json = await ProjectionInfoModel.searchEpsg(wgs84.epsg)
-        console.log(fetchMock)
-        // expect(fetchMock).toHaveBeenCalledWith("https://epsg.io/?format=json&q=4326")
-
         expect(json instanceof EpsgSearchResponse).toBeTruthy()
         expect(json.results.length).toEqual(1)
         expect(json.results[0] instanceof EpsgInfo).toBeTruthy()
+        global.fetch.mockClear()
+        delete global.fetch
     })
+
+    // test('ProjectionInfoModel.searchEpsg(4326) searches epsg.io and returns data', async () => {
+    //     const json = await ProjectionInfoModel.searchEpsg(wgs84.epsg)
+    //     expect(json).toBeTruthy()
+        // expect(json.received instanceof EpsgSearchResponse).toBeTruthy()
+    // });
 
     // test("Fetching projection details with projectionDetails method", async ()=> {
     //     const fetchMock = jest

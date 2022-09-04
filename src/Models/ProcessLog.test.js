@@ -1,11 +1,11 @@
 /*
  * Filename: ProcessLog.test.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Friday May 27th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri May 27 2022
+ * Last Modified: Sat Sep 03 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -65,7 +65,8 @@ describe("ProcessLog", ()=> {
     describe("Method parseStdout", ()=> {
         test("stdout is parsed when delimitar is a space", ()=> {
            let parsedOutput =  mockData.parserStdout("\n")
-           expect(parsedOutput).toBe({})
+           expect(Object.keys(parsedOutput)).toContain("aspect")
+           expect(Object.values(parsedOutput)).toContain("basin_50k")
         })
     })
 

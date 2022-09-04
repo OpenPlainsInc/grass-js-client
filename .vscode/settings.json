@@ -164,4 +164,5 @@
     },
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
+    "jest.jestCommandLine": "npm test --",
 }
