@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri Aug 19 2022
+ * Last Modified: Sun Sep 04 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -30,14 +30,14 @@
  * 
  */
 
-import { Models } from Models;
-import { Routes } from Routes;
-import { Utils } from Utils;
+import Models from "./Models";
+import Routes from "./Routes";
+import Utils from "./Utils";
 
-const grass = {
-    Models,
-    Routes,
-    Utils
+const Grass = {
+    models: { ...Models },
+    routes: { ...Routes },
+    utils: { ...Utils }
 }
 
-export default grass
+export default Grass

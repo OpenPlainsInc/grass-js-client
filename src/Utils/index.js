@@ -1,5 +1,8 @@
-import {jsonparsers} from "jsonparsers"
+import { groupBy, parserProjection } from "./jsonparsers"
 
-export {
-    jsonparsers
+const Utils = {
+    groupBy,
+    parserProjection
 }
+
+export default Utils

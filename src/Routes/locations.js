@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri Aug 19 2022
+ * Last Modified: Sun Sep 04 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -32,12 +32,9 @@
 
 import { SETTINGS } from "../settings.json"
 import { RESPONSESTRINGS } from "../strings.json"
-import { 
-    ProcessResponseModel,
-    LocationsListResponseModel, 
-    SimpleResponseModel
-} from "../Models"
-
+import { ProcessResponseModel } from "../Models/ProcessResponseModel";
+import { LocationsListResponseModel } from "../Models/LocationsListResponseModel";
+import { SimpleResponseModel } from "../Models/SimpleResponseModel";
 
 const API_HOST = SETTINGS.API_HOST;
 

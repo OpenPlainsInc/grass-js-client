@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Sat Aug 20 2022
+ * Last Modified: Sun Sep 04 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -32,11 +32,10 @@
 
 import { SETTINGS } from "../settings.json"
 import { RESPONSESTRINGS } from "../strings.json"
-import { 
-    ProcessResponseModel,
-    MapsetInfoResponseModel, 
-    SimpleResponseModel
-} from "../Models"
+import { apiRequest } from "./utils";
+import { ProcessResponseModel } from "../Models/ProcessResponseModel";
+import { MapsetInfoResponseModel } from "../Models/MapsetInfoResponseModel";
+import { SimpleResponseModel } from "../Models/SimpleResponseModel";
 
 const API_HOST = `${SETTINGS.API_HOST}/g/locations`;
 const MAPSET_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.mapset
@@ -121,7 +120,7 @@ const Mapsets = {
             });
             let data = await res.json()
             if (res.ok) return new ProcessResponseModel({...data.response});
-            return new SimpleResponseModel({...data.response}); // TODO: Update model to ProcessingErrorResponseModel                   
+            return new ProcessResponseModel({...data.response}); // ProcessResponseModel is the same as ProcessingErrorResponseModel                   
           } catch (err) {
             console.error(`${MAPSET_ERROR_RESPONSE.deleteMapset[SETTINGS.LANGUAGE]} ${err}`);
         }
@@ -141,7 +140,7 @@ const Mapsets = {
                 ...options
             });
             let data = await res.json()
-            if (res.ok) return new ProcessResponseModel({...data.response}); // TODO: Updaet model to MapsetLockManagementResponseModel
+            if (res.ok) return new ProcessResponseModel({...data.response}); // ProcessResponseModel is the same as the MapsetLockManagementResponseModel
             return new ProcessResponseModel({...data.response});               
           } catch (err) {
             console.error(`${MAPSET_ERROR_RESPONSE.deleteMapset[SETTINGS.LANGUAGE]} ${err}`);
@@ -173,21 +172,9 @@ const Mapsets = {
          * Delete a location/mapset lock. A location/mapset lock can be deleted so that operation can be performed on it until it is locked. Minimum required user role: admin.
          * Route: /locations/{location_name}/mapsets/{mapset_name}
         */
-        try {
-            const url = new URL(`${API_HOST}/${locationName}/mapsets/${mapsetName}/lock`)
-            let res = await fetch(url, { 
-                method: "DELETE",
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                ...options
-            });
-            let data = await res.json()
-            if (res.ok) return new ProcessResponseModel({...data.response});
-            return new ProcessResponseModel({...data.response});              
-          } catch (err) {
-            console.error(`${MAPSET_ERROR_RESPONSE.deleteMapsetLock[SETTINGS.LANGUAGE]} ${err}`);
-        }
+        const url = new URL(`${API_HOST}/${locationName}/mapsets/${mapsetName}/lock`)
+        const errorString = MAPSET_ERROR_RESPONSE.deleteMapsetLock[SETTINGS.LANGUAGE]
+        return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, options)
     })
 }
 

@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri Aug 19 2022
+ * Last Modified: Sun Sep 04 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -30,10 +30,12 @@
  * 
  */
 
-import {locactions} from "./locations"
-import {mapsets} from "./mapsets"
+import Locations from "./locations"
+import Mapsets from "./mapsets"
 
-export {
-    locactions,
-    mapsets
+const Routes = {
+    Locations,
+    Mapsets
 }
+
+export default Routes
