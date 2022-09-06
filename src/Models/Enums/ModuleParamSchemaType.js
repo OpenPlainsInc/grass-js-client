@@ -1,7 +1,7 @@
 /*
- * Filename: utils.js
- * Project: OpenPlains
- * File Created: Monday August 22nd 2022
+ * Filename: ModuleParamSchemaType.js
+ * Project: TomorrowNow
+ * File Created: Tuesday September 6th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
@@ -10,7 +10,7 @@
  * -----
  * License: GPLv3
  * 
- * Copyright (c) 2022 OpenPlains
+ * Copyright (c) 2022 TomorrowNow
  * 
  * TomorrowNow is an open-source geospatial participartory modeling platform
  * to enable stakeholder engagment in socio-environmental decision-makeing.
@@ -31,21 +31,23 @@
  */
 
 
-export const apiRequest = (async (url, method, successResponseClass, errorResponseClass, errorString, queryParams={}, options={}) => {
-    try {
-        let params = new URLSearchParams(queryParams)
-        let _url = `${url}?${params}`
-        let res = await fetch(_url, { 
-            method: method,
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            ...options
-        });
-        let data = await res.json()
-        if (res.ok) return new successResponseClass({...data.response});
-        return new errorResponseClass({...data.response});              
-      } catch (err) {
-        console.error(`${errorString} ${err}`);
+export class ModuleParamSchemaType {
+    static STRING = new ModuleParamSchemaType('string');
+    static NUMBER = new ModuleParamSchemaType('number');
+    static BOOLEAN = new ModuleParamSchemaType('boolean');
+    static ARRAY = new ModuleParamSchemaType('array');
+    static INTEGER = new ModuleParamSchemaType('integer');
+
+    constructor(name) {
+        this.name = name;
     }
-})
+
+    toString() {
+        return `ModuleParamSchemaType.${this.name}`
+    }
+
+    validate() {
+        if (!Object.keys(ModuleParamSchemaType).includes(this.name)) throw Error(`Server response type '${this.name}' is not a valid option`)
+        return this.name
+    }
+}

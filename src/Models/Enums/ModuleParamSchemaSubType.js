@@ -1,7 +1,7 @@
 /*
- * Filename: utils.js
- * Project: OpenPlains
- * File Created: Monday August 22nd 2022
+ * Filename: ModuleParamSchemaSubType.js
+ * Project: TomorrowNow
+ * File Created: Tuesday September 6th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
@@ -10,7 +10,7 @@
  * -----
  * License: GPLv3
  * 
- * Copyright (c) 2022 OpenPlains
+ * Copyright (c) 2022 TomorrowNow
  * 
  * TomorrowNow is an open-source geospatial participartory modeling platform
  * to enable stakeholder engagment in socio-environmental decision-makeing.
@@ -31,21 +31,26 @@
  */
 
 
-export const apiRequest = (async (url, method, successResponseClass, errorResponseClass, errorString, queryParams={}, options={}) => {
-    try {
-        let params = new URLSearchParams(queryParams)
-        let _url = `${url}?${params}`
-        let res = await fetch(_url, { 
-            method: method,
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            ...options
-        });
-        let data = await res.json()
-        if (res.ok) return new successResponseClass({...data.response});
-        return new errorResponseClass({...data.response});              
-      } catch (err) {
-        console.error(`${errorString} ${err}`);
+export class ModuleParamSchemaSubType {
+    static CELL = new ModuleParamSchemaSubType('cell');
+    static VECTOR = new ModuleParamSchemaSubType('vector');
+    static COORDS = new ModuleParamSchemaSubType('coords');
+    static SEPARATOR = new ModuleParamSchemaSubType('separator');
+    static DBCOLUMN = new ModuleParamSchemaSubType('dbcolumn');
+    static COLORTABLE = new ModuleParamSchemaSubType('colortable');
+    static GRID3 = new ModuleParamSchemaSubType('grid3');
+    static FILE = new ModuleParamSchemaSubType('file');
+
+    constructor(name) {
+        this.name = name;
     }
-})
+
+    toString() {
+        return `ModuleParamSchemaSubType.${this.name}`
+    }
+
+    validate() {
+        if (!Object.keys(ModuleParamSchemaSubType).includes(this.name)) throw Error(`Server response subtype '${this.name}' is not a valid option`)
+        return this.name
+    }
+}

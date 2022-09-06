@@ -1,7 +1,7 @@
 /*
- * Filename: utils.js
+ * Filename: ModuleListResponse.js
  * Project: OpenPlains
- * File Created: Monday August 22nd 2022
+ * File Created: Tuesday September 6th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
@@ -10,7 +10,7 @@
  * -----
  * License: GPLv3
  * 
- * Copyright (c) 2022 OpenPlains
+ * Copyright (c) 2022 TomorrowNow
  * 
  * TomorrowNow is an open-source geospatial participartory modeling platform
  * to enable stakeholder engagment in socio-environmental decision-makeing.
@@ -30,22 +30,23 @@
  * 
  */
 
-
-export const apiRequest = (async (url, method, successResponseClass, errorResponseClass, errorString, queryParams={}, options={}) => {
-    try {
-        let params = new URLSearchParams(queryParams)
-        let _url = `${url}?${params}`
-        let res = await fetch(_url, { 
-            method: method,
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            ...options
-        });
-        let data = await res.json()
-        if (res.ok) return new successResponseClass({...data.response});
-        return new errorResponseClass({...data.response});              
-      } catch (err) {
-        console.error(`${errorString} ${err}`);
+import { RequestStatus } from "./Enums";
+import { ModuleResponse } from "./ModuleResponse";
+/**
+ * @Actinia
+ * @version 4.1.0
+ * Class that defines the response schema for module lists.
+ */
+ export class ModuleListResponse {
+    /**
+     * Create ProcessLog instance
+     * @param {Object}
+     * @param {String} status The status of the resource, values: accepted, running, finished, terminated, error
+     * @param {Array<ModuleResponse>} processes The list of modules in GRASS GIS
+     */
+    constructor({status, processes=[]}) {
+        this.status = new RequestStatus(status).validate();
+        this.processes = processes.map(r => new ModuleResponse({...r}));
     }
-})
+
+}

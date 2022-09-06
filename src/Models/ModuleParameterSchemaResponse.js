@@ -1,7 +1,7 @@
 /*
- * Filename: utils.js
+ * Filename: ModuleParameterSchemaResponse.js
  * Project: OpenPlains
- * File Created: Monday August 22nd 2022
+ * File Created: Tuesday September 6th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
@@ -10,7 +10,7 @@
  * -----
  * License: GPLv3
  * 
- * Copyright (c) 2022 OpenPlains
+ * Copyright (c) 2022 TomorrowNow
  * 
  * TomorrowNow is an open-source geospatial participartory modeling platform
  * to enable stakeholder engagment in socio-environmental decision-makeing.
@@ -31,21 +31,24 @@
  */
 
 
-export const apiRequest = (async (url, method, successResponseClass, errorResponseClass, errorString, queryParams={}, options={}) => {
-    try {
-        let params = new URLSearchParams(queryParams)
-        let _url = `${url}?${params}`
-        let res = await fetch(_url, { 
-            method: method,
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            ...options
-        });
-        let data = await res.json()
-        if (res.ok) return new successResponseClass({...data.response});
-        return new errorResponseClass({...data.response});              
-      } catch (err) {
-        console.error(`${errorString} ${err}`);
+import { ModuleParamSchemaType, ModuleParamSchemaSubType } from "./Enums";
+
+/**
+ * @Actinia
+ * @version 4.1.0
+ * 
+ */
+export class ModuleParameterSchemaResponse {
+    /**
+     * A class that defines a module parameter schema.
+     * @param {Object}
+     * @param {String} type Base data type
+     * @param {String} subtype Sub data type
+     * @param {List<String>} options The enum options for a modules dropdown list.
+     */
+    constructor({type, subtype, "enum": options=undefined}) {
+        this.type = new ModuleParamSchemaType(type).validate();
+        this.subtype = new ModuleParamSchemaSubType(subtype).validate();
+        this.options = options;
     }
-})
+}

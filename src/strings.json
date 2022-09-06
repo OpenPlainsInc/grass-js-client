@@ -36,6 +36,14 @@
             "deleteMapsetLock": {
                 "en": "The following error occured trying to delete a lock:"
             }
+        },
+        "modules": {
+            "getModules": {
+                "en": "The following error occured trying to retrieve actinia modules:"
+            },
+            "getModule": {
+                "en": "The following error occured trying to retrieve actinia module:"
+            }
         }
     }
 }

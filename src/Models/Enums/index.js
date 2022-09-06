@@ -1,11 +1,11 @@
 /*
  * Filename: index.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Wednesday May 25th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed May 25 2022
+ * Last Modified: Tue Sep 06 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -42,6 +42,8 @@ import { Extent } from "./Extent";
 import { Resample } from "./Resample";
 import { Resolution } from "./Resolution";
 import { RequestStatus } from "./RequestStatus";
+import { ModuleParamSchemaType } from "./ModuleParamSchemaType";
+import { ModuleParamSchemaSubType } from "./ModuleParamSchemaSubType";
 export {
     StdoutFormat,
     ExportFormat,
@@ -53,5 +55,7 @@ export {
     Extent,
     Resample,
     Resolution,
-    RequestStatus
+    RequestStatus,
+    ModuleParamSchemaType,
+    ModuleParamSchemaSubType
 }

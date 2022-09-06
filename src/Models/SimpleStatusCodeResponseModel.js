@@ -1,7 +1,7 @@
 /*
- * Filename: utils.js
+ * Filename: SimpleStatusCodeResponseModel.js
  * Project: OpenPlains
- * File Created: Monday August 22nd 2022
+ * File Created: Tuesday September 6th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
@@ -31,21 +31,14 @@
  */
 
 
-export const apiRequest = (async (url, method, successResponseClass, errorResponseClass, errorString, queryParams={}, options={}) => {
-    try {
-        let params = new URLSearchParams(queryParams)
-        let _url = `${url}?${params}`
-        let res = await fetch(_url, { 
-            method: method,
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            ...options
-        });
-        let data = await res.json()
-        if (res.ok) return new successResponseClass({...data.response});
-        return new errorResponseClass({...data.response});              
-      } catch (err) {
-        console.error(`${errorString} ${err}`);
+export class SimpleStatusCodeResponseModel {
+    /**
+     * Create a SimpleResponseModel instance
+     * @param {Number} status - The status code of the request.
+     * @param {String} message - A short message to describes the status
+     */
+    constructor({status, message}) {
+        this.status = status;
+        this.message = message;
     }
-})
+}

@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Sun Sep 04 2022
+ * Last Modified: Tue Sep 06 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -48,6 +48,11 @@ import { MapsetInfoModel } from "./MapsetInfoModel";
 import { RegionModel } from "./RegionModel";
 import { MapsetInfoResponseModel } from "./MapsetInfoResponseModel";
 import { ProjectionInfoModel } from "./ProjectionInfoModel";
+import { ModuleListResponse } from "./ModuleListResponse";
+import { ModuleParameterResponse } from "./ModuleParameterResponse";
+import { ModuleParameterSchemaResponse } from "./ModuleParameterSchemaResponse";
+import { ModuleResponse } from "./ModuleResponse";
+import { SimpleStatusCodeResponseModel } from "./SimpleStatusCodeResponseModel";
 
 const Models = {
     GrassModule,
@@ -67,9 +72,14 @@ const Models = {
     MapsetInfoModel,
     RegionModel,
     MapsetInfoResponseModel,
-    ProjectionInfoModel
+    ProjectionInfoModel,
+    ModuleListResponse,
+    ModuleParameterResponse,
+    ModuleParameterSchemaResponse,
+    ModuleResponse,
+    SimpleStatusCodeResponseModel
 }
 
 export default Models
 
-export {models}
+export { Models }
