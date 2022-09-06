@@ -5,6 +5,8 @@
     "main": "dist/main.js",
     "module": "dist/module.js",
     "proxy": "http://localhost:8005",
+    "isLibrary": true,
+    "outputFormat": "esmodule",
     "devDependencies": {
         "@babel/core": "^7.18.10",
         "@babel/preset-env": "^7.18.10",
