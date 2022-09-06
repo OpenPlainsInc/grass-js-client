@@ -30,7 +30,7 @@ jobs:
         cache: 'npm'
         cache-dependency-path: 'package-lock.json'
     - name: Install dev dependencies
-    - run: npm ci
+      run: npm ci
     - name: Run test-ci steps
       run: npm run test-ci --if-present
     - name: Run build steps
