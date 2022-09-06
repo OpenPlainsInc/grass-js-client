@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Mon Aug 22 2022
+ * Last Modified: Tue Sep 06 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -31,7 +31,7 @@
  */
 
 
-export const apiRequest = (async (url, method, successResponseClass, errorResponseClass, errorString, options) => {
+export const apiRequest = (async (url, method, successResponseClass, errorResponseClass, errorString, options={}) => {
     try {
         
         let res = await fetch(url, { 
