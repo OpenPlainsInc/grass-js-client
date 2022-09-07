@@ -1,4 +1,4 @@
-{
+const SETTINGS = {
     "API_HOST": "http://localhost:8005/savana",
     "API_SOURCE": ["actinia", "openplains"],
     "ACTINIA_VERSION": "4.2.1",
@@ -44,3 +44,5 @@
         }
     ]
 }
+
+export { SETTINGS }

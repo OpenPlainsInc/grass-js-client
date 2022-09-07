@@ -1,11 +1,11 @@
 /*
  * Filename: GrassModule.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Wednesday May 25th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Thu Jun 09 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -52,7 +52,9 @@ export class GrassModule {
     constructor({id, module, inputs=[], outputs=[], flags=undefined, stdin=undefined, stdout=undefined, overwrite=false, verbose=false, superquiet=false, interface_description=false}) {
         this.id = id;
         this.module = module;
-        this.inputs = inputs.map(i => new InputParameter({...i}));
+        // Inputs param does not match actinia documentation, so I'm just setting it to the response object 
+        // Unit the issue is resolved.
+        this.inputs = inputs; //.map(i => new InputParameter({...i})); 
         this.outputs = outputs.map(o => new OutputParameter({...o}));
         this.flags = flags;
         this.stdin = stdin;

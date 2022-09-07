@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Sat Sep 03 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -95,26 +95,5 @@ describe("ProjectionInfoModel", ()=> {
         global.fetch.mockClear()
         delete global.fetch
     })
-
-    // test('ProjectionInfoModel.searchEpsg(4326) searches epsg.io and returns data', async () => {
-    //     const json = await ProjectionInfoModel.searchEpsg(wgs84.epsg)
-    //     expect(json).toBeTruthy()
-        // expect(json.received instanceof EpsgSearchResponse).toBeTruthy()
-    // });
-
-    // test("Fetching projection details with projectionDetails method", async ()=> {
-    //     const fetchMock = jest
-    //         .spyOn(global, 'fetch')
-    //         .mockImplementation(() =>
-    //         Promise.resolve({ json: () => Promise.resolve({...MOCK_EPSG_RESPONSE}) })
-    //     )
-    //     let proj = new ProjectionInfoModel(wgs84)
-    //     const json = proj.fetchDetails()
-    //     console.log(json)
-    //     expect(json instanceof ProjectionInfoModel).toBeTruthy()
-    //     expect(json.results.length).toEqual(1)
-    //     expect(json.results[0] instanceof EpsgInfo).toBeTruthy()
-    //     expect(projDetails.projectionDetails instanceof EpsgSearchResponse).toBeTruthy()
-    // })
 })
 

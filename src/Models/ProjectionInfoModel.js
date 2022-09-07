@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri Aug 19 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -55,7 +55,7 @@ export class ProjectionInfoModel {
     async fetchDetails() {
         let epsg = this.epsg
         const results = await ProjectionInfoModel.searchEpsg(epsg).results;
-        console.log(results);
+      
         if (results) {
             this.projectionDetails = results.map(result => {
                 let projDetails = {};
@@ -90,13 +90,10 @@ export class ProjectionInfoModel {
             const url = new URL(`${this.EPSGIO_BASE_URL}?format=json&q=${epsg}`)
             const res = await fetch(url);
             const data = await res.json();
-            
             const response = await new EpsgSearchResponse({...data})
-            console.log("epsg.io response:", response)
             return response
         }
         catch(e) {
-            console.log("Search Failed");
             return null;
         }
     }

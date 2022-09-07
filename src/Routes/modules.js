@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Tue Sep 06 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -30,10 +30,9 @@
  * 
  */
 
-import { SETTINGS } from "../settings.json"
-import { RESPONSESTRINGS } from "../strings.json"
+import { SETTINGS } from "../settings";
+import { RESPONSESTRINGS } from "../strings"
 import { apiRequest } from "./utils";
-import { ProcessResponseModel } from "../Models/ProcessResponseModel";
 import { ModuleListResponse } from "../Models/ModuleListResponse";
 import { SimpleStatusCodeResponseModel } from "../Models/SimpleStatusCodeResponseModel";
 import { ModuleResponse } from "../Models/ModuleResponse";
@@ -67,7 +66,7 @@ const Modules = {
          * Route: /grass_modules/{grassmodule}
         */
         const url = new URL(`${API_HOST}/${grassmodule}`)
-        const errorString = MAPSET_ERROR_RESPONSE.getModule[SETTINGS.LANGUAGE]
+        const errorString = MODULE_ERROR_RESPONSE.getModule[SETTINGS.LANGUAGE]
         return apiRequest(url, "POST", ModuleResponse, SimpleStatusCodeResponseModel, errorString, options)
     })
 }

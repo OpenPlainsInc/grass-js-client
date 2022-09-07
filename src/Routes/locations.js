@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Sun Sep 04 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -30,13 +30,21 @@
  * 
  */
 
-import { SETTINGS } from "../settings.json"
-import { RESPONSESTRINGS } from "../strings.json"
+import { SETTINGS } from "../settings"
+import { RESPONSESTRINGS } from "../strings"
 import { ProcessResponseModel } from "../Models/ProcessResponseModel";
 import { LocationsListResponseModel } from "../Models/LocationsListResponseModel";
 import { SimpleResponseModel } from "../Models/SimpleResponseModel";
+import { apiRequest } from "./utils";
 
 const API_HOST = SETTINGS.API_HOST;
+const LOCATION_ROUTES = (locationName=undefined) => {
+    return locationName ? `${API_HOST}/g/locations/${locationName}` : `${API_HOST}/g/locations`
+}
+
+const INFO_ROUTES = (locationName) => `${LOCATION_ROUTES(locationName)}/info`
+
+const LOCATION_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.location;
 
 const Locations = {
     getLocations: (async (options={}) => {
@@ -45,87 +53,41 @@ const Locations = {
          * Route: /locations/
          * Returns: LocationListResponseModel
         */
-          try {
-            const url = new URL(`${API_HOST}/g/locations`)
-            let res = await fetch(url, { 
-                headers: {
-                'Content-Type': 'application/json',
-                },
-                ...options
-            });
-            
-            let data = await res.json()
-            if (res.ok) return new LocationsListResponseModel({...data.response});
-            return new SimpleResponseModel({...data.response});                
-        } catch (err) {
-            console.error(`${RESPONSESTRINGS.errorRepsonse.location.getLocations[SETTINGS.LANGUAGE]} ${err}`);
-        }
-    }),
-    getLocation: (async (locationName, options={}) => {
-        /**
-         * Get the location projection and current computational region of the PERMANENT mapset. Minimum required user role: user.
-         * Route: /locations/{location_name}/info
-        */
-          try {
-            const url = new URL(`${API_HOST}/g/locations/${locationName}/info`)
-            let res = await fetch(url, { 
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                ...options
-            });
-            let data = await res.json();
-            if (res.ok) return new ProcessResponseModel({...data.response});
-            return new SimpleResponseModel({...data.response}); 
-                                                
-        } catch (err) {
-            console.error(`${RESPONSESTRINGS.errorRepsonse.location.getLocation[SETTINGS.LANGUAGE]} ${err}`);
-        }
+        const url = new URL(LOCATION_ROUTES())
+        const errorString = LOCATION_ERROR_RESPONSE.getLocations[SETTINGS.LANGUAGE]
+        return apiRequest(url, "GET", LocationsListResponseModel, SimpleResponseModel, errorString, options)
     }),
     createLocation: (async (locationName, epsg, options={}) => {
         /**
          * Create a new location based on EPSG code in the user database. Minimum required user role: user.
          * Route: /locations/{location_name}/
         */
-          try {
-            // let queryParams = {un: params.unId}
-            const url = new URL(`${API_HOST}/g/locations/${locationName}`)
-            let res = await fetch(url, { 
-                method: "POST",
-                body: JSON.stringify({epsg: epsg}),
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                ...options
-            });
-            let data = await res.json();
-            if (res.ok) return new ProcessResponseModel({...data.response});
-            return new ProcessResponseModel({...data.response});                       
-        } catch (err) {
-            console.error(`${RESPONSESTRINGS.errorRepsonse.location.createLocation[SETTINGS.LANGUAGE]} ${err}`);
+        const url = new URL(LOCATION_ROUTES(locationName))
+        const errorString = LOCATION_ERROR_RESPONSE.createLocation[SETTINGS.LANGUAGE]
+        const _options = {
+            body: JSON.stringify({epsg}),
+            ...options
         }
+        return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, _options)
     }),
     deleteLocation: (async (locationName, options={}) => {
         /**
          * Delete an existing location and everything inside from the user database. Minimum required user role: user.
          * Route: /locations/{location_name}/
         */
-          try {
-            const url = new URL(`${API_HOST}/g/locations/${locationName}`)
-            let res = await fetch(url, { 
-                method: "DELETE",
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                ...options
-            });
-            let data = await res.json();
-            if (res.ok) return new SimpleResponseModel({...data.response});
-            return new SimpleResponseModel({...data.response});                       
-        } catch (err) {
-            console.error(`${RESPONSESTRINGS.errorRepsonse.location.deleteLocation[SETTINGS.LANGUAGE]} ${err}`);
-        }
-    })
+        const url = new URL(LOCATION_ROUTES(locationName))
+        const errorString = LOCATION_ERROR_RESPONSE.deleteLocation[SETTINGS.LANGUAGE]
+        return apiRequest(url, "DELETE", SimpleResponseModel, SimpleResponseModel, errorString, options)
+    }),
+    getLocation: (async (locationName, options={}) => {
+        /**
+         * Get the location projection and current computational region of the PERMANENT mapset. Minimum required user role: user.
+         * Route: /locations/{location_name}/info
+        */
+        const url = new URL(INFO_ROUTES(locationName))
+        const errorString = LOCATION_ERROR_RESPONSE.getLocation[SETTINGS.LANGUAGE]
+        return apiRequest(url, "GET", ProcessResponseModel, SimpleResponseModel, errorString, options)
+    }),
 }
 
 export default Locations

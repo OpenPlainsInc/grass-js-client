@@ -1,17 +1,17 @@
-{
+const RESPONSESTRINGS = {
     "errorRepsonse": {
         "location": {
             "getLocations": {
                 "en": "The following error occured trying to access locations:"
             },
             "getLocation": {
-                "en": "The following error occured trying to fetch you locatoin:"
+                "en": "The following error occured trying to fetch you location:"
             },
             "createLocation": {
-                "en": "The following error occured trying to create your locatoin:"
+                "en": "The following error occured trying to create your location:"
             },
             "deleteLocation": {
-                "en": "The following error occured trying to delete your locatoin:"
+                "en": "The following error occured trying to delete your location:"
             }
         },
         "mapset": {
@@ -47,3 +47,5 @@
         }
     }
 }
+
+export { RESPONSESTRINGS }

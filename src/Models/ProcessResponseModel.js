@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri Aug 19 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -64,7 +64,7 @@ import { SimpleResponseModel } from "./SimpleResponseModel";
      * @param {ApiInfoModel|null} [api_info = null]
      */ 
     constructor({status, user_id, resource_id, accept_timestamp, accept_datetime, timestamp, time_delta, datetime, process_log=null, process_chain_list=null, process_results=null, progress=null, message=null, exception=null, http_code = null, urls = null, api_info = null}) {
-        super(status, message);
+        super({status, message});
         this.acceptDatetime = new Date(accept_datetime);
         this.acceptTimestamp = accept_timestamp;
         this.apiInfo = api_info ? new ApiInfoModel({...api_info}) : api_info;

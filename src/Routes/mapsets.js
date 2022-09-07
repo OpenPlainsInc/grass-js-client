@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Tue Sep 06 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -30,8 +30,8 @@
  * 
  */
 
-import { SETTINGS } from "../settings.json"
-import { RESPONSESTRINGS } from "../strings.json"
+import { SETTINGS } from "../settings"
+import { RESPONSESTRINGS } from "../strings"
 import { apiRequest } from "./utils";
 import { ProcessResponseModel } from "../Models/ProcessResponseModel";
 import { MapsetInfoResponseModel } from "../Models/MapsetInfoResponseModel";
