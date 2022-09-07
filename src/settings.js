@@ -5,14 +5,6 @@ const SETTINGS = {
     "LANGUAGE": "en",
     "APP_NAME": "OpenPlains",
     "APP_ICON": "",
-    "COLOR_SCHEME": {
-        "primary": "",
-        "primary-light": "",
-        "primary-dark": "",
-        "secondary": "",
-        "secondary-light": "",
-        "secondary-dark": ""
-    },
     "PLUGINS": [
         {
             "name": "actinia_statistic_plugin",
