@@ -106,32 +106,6 @@ const Grass = {
             }
         })
     },
-    g: {
-        modules: {
-            all: (async (queryParams={})=> {
-                try {
-                    let url = new URL(`${API_HOST}/g/modules`)
-                    let params = new URLSearchParams(queryParams)
-                    const res = await fetch(`${url}?${params}`);   
-                    return await res.json();
-                } catch (e) {
-                    console.log(e);
-                }
-            }),
-            get: async (moduleName)=> {
-                try {
-                    let url = new URL(`${API_HOST}/g/modules/${moduleName}`)
-                    const res = await fetch(url); 
-                    const responseJson = await res.json(); 
-                    console.log("Module Data", responseJson.response) 
-                    return responseJson.response;
-                } catch (e) {
-                    console.log(e);
-                }
-            }
-
-        }
-    },
     r: {
         info: (async (locationName, mapsetName, rasterName)=> {
             try {

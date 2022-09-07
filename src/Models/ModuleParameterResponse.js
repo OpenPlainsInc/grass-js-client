@@ -1,6 +1,6 @@
 /*
  * Filename: ModuleParameterResponse.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Tuesday September 6th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
@@ -52,7 +52,7 @@ import { ModuleParameterSchemaResponse } from "./ModuleParameterSchemaResponse";
         this.description = description;
         this.optional = optional;
         this.defaultValue = defaultValue; // is default
-        this.schema = ModuleParameterSchemaResponse(schema);
+        this.schema = new ModuleParameterSchemaResponse({...schema});
     }
 
 }

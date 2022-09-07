@@ -1,6 +1,6 @@
 /*
  * Filename: ModuleParamSchemaType.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Tuesday September 6th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
@@ -30,16 +30,19 @@
  * 
  */
 
-
 export class ModuleParamSchemaType {
-    static STRING = new ModuleParamSchemaType('string');
-    static NUMBER = new ModuleParamSchemaType('number');
-    static BOOLEAN = new ModuleParamSchemaType('boolean');
-    static ARRAY = new ModuleParamSchemaType('array');
-    static INTEGER = new ModuleParamSchemaType('integer');
+    static string = new ModuleParamSchemaType('string');
+    static number = new ModuleParamSchemaType('number');
+    static boolean = new ModuleParamSchemaType('boolean');
+    static array = new ModuleParamSchemaType('array');
+    static integer = new ModuleParamSchemaType('integer');
 
     constructor(name) {
         this.name = name;
+    }
+
+    toList() {
+        return Object.keys(ModuleParamSchemaType).forEach(option => option)
     }
 
     toString() {

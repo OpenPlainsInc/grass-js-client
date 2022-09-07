@@ -43,12 +43,12 @@ export class ModuleParameterSchemaResponse {
      * A class that defines a module parameter schema.
      * @param {Object}
      * @param {String} type Base data type
-     * @param {String} subtype Sub data type
-     * @param {List<String>} options The enum options for a modules dropdown list.
+     * @param {String} [subtype=undefined] Sub data type
+     * @param {List<String>} [options=undefined] The enum options for a modules dropdown list.
      */
-    constructor({type, subtype, "enum": options=undefined}) {
+    constructor({type, subtype=undefined, "enum": options=undefined}) {
         this.type = new ModuleParamSchemaType(type).validate();
-        this.subtype = new ModuleParamSchemaSubType(subtype).validate();
+        this.subtype = subtype ? new ModuleParamSchemaSubType(subtype).validate() : subtype;
         this.options = options;
     }
 }

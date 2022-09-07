@@ -1,6 +1,6 @@
 /*
  * Filename: ModuleParamSchemaSubType.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Tuesday September 6th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
@@ -32,17 +32,22 @@
 
 
 export class ModuleParamSchemaSubType {
-    static CELL = new ModuleParamSchemaSubType('cell');
-    static VECTOR = new ModuleParamSchemaSubType('vector');
-    static COORDS = new ModuleParamSchemaSubType('coords');
-    static SEPARATOR = new ModuleParamSchemaSubType('separator');
-    static DBCOLUMN = new ModuleParamSchemaSubType('dbcolumn');
-    static COLORTABLE = new ModuleParamSchemaSubType('colortable');
-    static GRID3 = new ModuleParamSchemaSubType('grid3');
-    static FILE = new ModuleParamSchemaSubType('file');
+    static cell = new ModuleParamSchemaSubType('cell');
+    static vector = new ModuleParamSchemaSubType('vector');
+    static coords = new ModuleParamSchemaSubType('coords');
+    static separator = new ModuleParamSchemaSubType('separator');
+    static dbcolumn = new ModuleParamSchemaSubType('dbcolumn');
+    static colortable = new ModuleParamSchemaSubType('colortable');
+    static grid3 = new ModuleParamSchemaSubType('grid3');
+    static file = new ModuleParamSchemaSubType('file');
+    static dir = new ModuleParamSchemaSubType('dir');
 
     constructor(name) {
         this.name = name;
+    }
+
+    toList() {
+        return Object.keys(ModuleParamSchemaSubType).forEach(option => option)
     }
 
     toString() {
