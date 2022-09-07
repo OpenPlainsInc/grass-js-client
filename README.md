@@ -76,10 +76,11 @@ More documentation to come...
 
 ### Contribute
 
-Set up your node environment
+Set up your node environment and install dependencies
 
 ```bash
 nvm use
+npm install
 ```
 
 #### Testing
