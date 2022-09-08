@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Tue Sep 06 2022
+ * Last Modified: Thu Sep 08 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -53,6 +53,9 @@ import { ModuleParameterResponse } from "./ModuleParameterResponse";
 import { ModuleParameterSchemaResponse } from "./ModuleParameterSchemaResponse";
 import { ModuleResponse } from "./ModuleResponse";
 import { SimpleStatusCodeResponseModel } from "./SimpleStatusCodeResponseModel";
+import { ImagePNGResponse } from "./ImagePNGResponse";
+import { RasterInfoModel } from "./RasterInfoModel";
+import { RasterInfoResponseModel } from "./RasterInfoResponseModel";
 
 const Models = {
     GrassModule,
@@ -77,7 +80,10 @@ const Models = {
     ModuleParameterResponse,
     ModuleParameterSchemaResponse,
     ModuleResponse,
-    SimpleStatusCodeResponseModel
+    SimpleStatusCodeResponseModel,
+    ImagePNGResponse,
+    RasterInfoModel,
+    RasterInfoResponseModel
 }
 
 export default Models

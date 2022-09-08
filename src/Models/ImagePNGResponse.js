@@ -1,7 +1,7 @@
 /*
- * Filename: grass.js
+ * Filename: ImagePNGResponse.js
  * Project: OpenPlains
- * File Created: Tuesday April 12th 2022
+ * File Created: Thursday September 8th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
@@ -10,7 +10,7 @@
  * -----
  * License: GPLv3
  * 
- * Copyright (c) 2022 TomorrowNow
+ * Copyright (c) 2022 OpenPlains
  * 
  * TomorrowNow is an open-source geospatial participartory modeling platform
  * to enable stakeholder engagment in socio-environmental decision-makeing.
@@ -31,22 +31,24 @@
  */
 
 
+/**
+ * A class that holds a PNG image response from the server
+ * @class
+ * @param {string} raster_name - The name of the raster
+ * @param {string} imagedata - Base64 encoding of png image
+ */
+ export class ImagePNGResponse {
+    constructor({raster_name, imagedata}) {
+        this.rasterName = raster_name;
+        this.imagedata = imagedata;
+    }
 
-const API_HOST = "http://localhost:8005/savana"
-
-
-const getLocalStorageData = key => () => {
-    return localStorage.getItem(key);
-}
-
-const setLocalStorageData = (key, value) => () => {
-    return localStorage.setItem(key, value)
-}
-
-const removeLocalStorageData = (key, value) => () => {
-    return localStorage.removeItem(key, value)
-}
-
-const clearLocalStorageData = () => {
-    return localStorage.clear()
+    /**
+     * Return a url for the base64 png data.
+     * @method
+     * @returns {string} - Url of base64 png data
+     */
+    url() {
+        return `data:image/png;base64,${this.imagedata}`
+    }
 }

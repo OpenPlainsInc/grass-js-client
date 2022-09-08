@@ -53,6 +53,15 @@ const RESPONSESTRINGS = {
             },
             "deleteRaster": {
                 "en": "The following error occured trying to delete raster for mapset:"
+            },
+            "renderRaster": {
+                "en": "The following error occured trying to render raster for mapset:"
+            },
+            "rasterColor": {
+                "en": "The following error occured trying to get raster for colors:"
+            },
+            "rasterRenderGeoTiff": {
+                "en": "The following error occured trying to render geotiff for raster:"
             }
         },
         "modules": {

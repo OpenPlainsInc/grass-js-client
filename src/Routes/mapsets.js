@@ -39,6 +39,8 @@ import { apiRequest } from "./utils";
 import { ProcessResponseModel } from "../Models/ProcessResponseModel";
 import { MapsetInfoResponseModel } from "../Models/MapsetInfoResponseModel";
 import { SimpleResponseModel } from "../Models/SimpleResponseModel";
+import { ImagePNGResponse } from "../Models/ImagePNGResponse";
+import { RasterInfoResponseModel } from "../Models/RasterInfoResponseModel";
 
 const API_HOST = `${SETTINGS.API_HOST}/g/locations`;
 
@@ -50,6 +52,11 @@ const INFO_ROUTES = (locationName, mapsetName) => `${MAPSET_ROUTES(locationName,
 const LOCK_ROUTES = (locationName, mapsetName) => `${MAPSET_ROUTES(locationName, mapsetName)}/lock`
 const RASTER_ROUTES = (locationName, mapsetName, rasterName=undefined) => {
     return rasterName ? `${MAPSET_ROUTES(locationName, mapsetName)}/raster_layers/${rasterName}` : `${MAPSET_ROUTES(locationName, mapsetName)}/raster_layers`
+}
+const RASTER_RENDER_ROUTES = (locationName, mapsetName, rasterName) => `${RASTER_ROUTES(locationName, mapsetName, rasterName)}/render`
+const RASTER_COLOR_ROUTES = (locationName, mapsetName, rasterName) => `${RASTER_ROUTES(locationName, mapsetName, rasterName)}/colors`
+const RASTER_GEOTIFF_ASYNC_ROUTES = (locationName, mapsetName, rasterName, orig=false) => {
+    return orig ? `${RASTER_ROUTES(locationName, mapsetName, rasterName)}/geotiff_async_orig` : `${RASTER_ROUTES(locationName, mapsetName, rasterName)}/geotiff_async`
 }
 
 const MAPSET_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.mapset
@@ -227,7 +234,6 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
 
 
 /**
- * @TODO Define RasterInfoResponseModel and ProcessingErrorResponseModel
  * Get information about an existing raster map layer. Minimum required user role: user.
  * Route: /locations/{location_name}/mapsets/{mapsetName}/raster_layers/{raster_name}
  * @function
@@ -236,14 +242,15 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
  * @param {String} mapsetName - The name of the mapset that contains the required raster map layer.
  * @param {String} rasterName - The name of the raster map layer to get information about.
  * @param {Object} [options={}] - Optional request parameters set to fetch.
- * @returns {Promise<RasterInfoResponseModel|ProcessingErrorResponseModel>}
+ * @returns {Promise<RasterInfoResponseModel>}
  */
-//  const getRasterLayer = ( async (locationName, mapsetName, rasterName, options={}) => {
-//     const url = new URL(RASTER_ROUTES(locationName, mapsetName, rasterName))
-//     const errorString = MAPSET_ERROR_RESPONSE.getRaster[SETTINGS.LANGUAGE]
-//     let queryParams = {}
-//     return apiRequest(url, "GET", RasterInfoResponseModel, ProcessingErrorResponseModel, errorString, queryParams, options)
-// })
+ const getRasterLayer = ( async (locationName, mapsetName, rasterName, options={}) => {
+    const url = new URL(RASTER_ROUTES(locationName, mapsetName, rasterName))
+    const errorString = MAPSET_ERROR_RESPONSE.getRaster[SETTINGS.LANGUAGE]
+    let queryParams = {}
+    return apiRequest(url, "GET", RasterInfoResponseModel, RasterInfoResponseModel, errorString, queryParams, options)
+})
+
 
 
 /**
@@ -257,7 +264,7 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
  * @param {String} locationName - The name of the location that should be accessed.
  * @param {String} mapsetName - The name of the mapset in which the raster map layer should be created
  * @param {String} rasterName - The name of the new raster map layer to be created
- * @param {FormData} data - The geotiff data to be uploaded
+ * @param {FormData} data - The geotiff file data to be uploaded
  * @param {Object} [options={}] - Optional request parameters set to fetch.
  * @returns {Promise<RasterInfoResponseModel|ProcessingErrorResponseModel>}
  */
@@ -274,7 +281,157 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
         },
         body: data
     }
-    return apiRequest(url, "POST", ProcessingResponseModel, ProcessingResponseModel, errorString, queryParams, _options)
+    return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, _options)
+})
+
+/**
+ * Delete an existing raster map layer. Minimum required user role: user.
+ * Route: /locations/{location_name}/mapsets/{mapsetName}/raster_layers/{raster_name}
+ * @function
+ * @async
+ * @param {String} locationName - The name of the location that should be accessed.
+ * @param {String} mapsetName - The name of the mapset that contains the required raster map layer.
+ * @param {String} rasterName - The name of the raster map layer to be deleted
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
+ * @returns {Promise<ProcessResponseModel>}
+ */
+ const deleteRasterLayer = ( async (locationName, mapsetName, rasterName, options={}) => {
+    const url = new URL(RASTER_ROUTES(locationName, mapsetName, rasterName))
+    const errorString = MAPSET_ERROR_RESPONSE.deleteRaster[SETTINGS.LANGUAGE]
+    let queryParams = {}
+    return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
+})
+
+
+/**
+ * Render a raster map layer as a PNG image. Minimum required user role: user.
+ * @function
+ * @async
+ * @param {String} locationName - The name of the location that should be accessed.
+ * @param {String} mapsetName - The name of the mapset that contains the required raster map layer.
+ * @param {String} rasterName - The name of the raster map layer to be rendered
+ * @param {Object} queryParams - Request query parameters
+ * @param {Number} [queryParams.n] - Northern border
+ * @param {Number} [queryParams.s] - Southern border
+ * @param {Number} [queryParams.e] - Eastern border
+ * @param {Number} [queryParams.w] - Western border
+ * @param {Number} [queryParams.width] - Image width in pixel, default is 800
+ * @param {Number} [queryParams.height] - Image height in pixel, default is 600
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
+ * @returns {Promise<ImagePNGResponse>}
+ */
+const renderRaster = (async (locationName, mapsetName, rasterName, queryParams, options={})=> {
+    const url = new URL(RASTER_RENDER_ROUTES(locationName, mapsetName, rasterName))
+    const errorString = MAPSET_ERROR_RESPONSE.renderRaster[SETTINGS.LANGUAGE]
+    return apiRequest(url, "GET", ImagePNGResponse, ProcessResponseModel, errorString, queryParams, options)
+})
+
+
+/**
+ * Export an existing raster map layer as GTiff or COG (if COG driver available). 
+ * The link to the exported raster map layer is located in the JSON response. 
+ * Minimum required user role: user.
+ * @function
+ * @async
+ * @param {string} locationName -The location name
+ * @param {string} mapsetName -The name of the mapset that contains the required raster map layer
+ * @param {string} rasterName - The name of the raster map layer to export
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
+ * @returns {Promise<ProcessResponseModel>}
+ */
+const renderGeoTiff = (async (locationName, mapsetName, rasterName, options={})=> {
+    const url = new URL(RASTER_GEOTIFF_ASYNC_ROUTES(locationName, mapsetName, rasterName, true))
+    const errorString = MAPSET_ERROR_RESPONSE.rasterRenderGeoTiff[SETTINGS.LANGUAGE]
+    const queryParams = {}
+    return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
+})
+
+
+/**
+ * Get the color definition of an existing raster map layer. Minimum required user role: user.
+ * @function
+ * @async
+ * @param {string} locationName - The location name
+ * @param {string} mapsetName - The name of the mapset t…quired raster map layer
+ * @param {string} rasterName - The name of the raster map layer to get the color table from
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
+ * @returns {Promise<ProcessResponseModel>}
+ */
+const getRasterColors = (async (locationName, mapsetName, rasterName, options={})=> {
+    const url = new URL(RASTER_COLOR_ROUTES(locationName, mapsetName, rasterName))
+    const errorString = MAPSET_ERROR_RESPONSE.rasterColor[SETTINGS.LANGUAGE]
+    const queryParams = {}
+    return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
+})
+
+
+/**
+ * Render a single vector m…quired user role: user.
+ * @todo Implment correctly
+ * @function
+ * @async
+ * @param {string} locationName 
+ * @param {string} mapsetName 
+ * @param {string} vectorName 
+ * @returns 
+ */
+ const renderVector=  (async (locationName, mapsetName, vectorName)=> {
+    try {
+        let url = new URL(`${API_HOST}/v/locations/${locationName}/mapsets/${mapsetName}/vector_layers/${vectorName}/render`)
+        const res = await fetch(url);
+        return await res.json();
+    } catch (e) {
+        console.log(e);
+    }
+})
+
+/**
+ * Get information about an existing vector map layer.
+ * Minimum required user role: user.
+ * @todo Implment correctly
+ * @function
+ * @async
+ * @param {string} locationName -The location name
+ * @param {string} mapsetName - The name of the mapset that contains the required vector map layer"
+ * @param {string} vectorName - The name of the vector map layer to get information about.
+ * @returns 
+ */
+const vectorInfo = (async (locationName, mapsetName, vectorName)=> {
+    try {
+        let url = new URL(`${API_HOST}/r/locations/${locationName}/mapsets/${mapsetName}/vector_layers/${vectorName}`)
+        const res = await fetch(url);
+        return await res.json();
+    } catch (e) {
+        console.log(e);
+    }
+})
+
+/**
+ * Get a list of vector map layer names that are located in a specific location/mapset.
+ * Minimum required user role: user.
+ * @todo Implment correctly
+ * @function
+ * @async
+ * @param {string} locationName - The name of the location that should be accessed
+ * @param {string} mapsetName - The name of the mapset from which the vector map layers should be listed
+ * @returns 
+ */
+const vectorLayers = (async (locationName, mapsetName) => {
+    /**
+     * Route: /locations/{location_name}/mapsets/{mapsetName}/vector_layers
+    */
+    try {
+        const url = new URL(`${API_HOST}/g/locations/${locationName}/mapsets/${mapsetName}/vector_layers`)
+        let res = await fetch(url, { 
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        });
+        let data = await res.json();
+        return data                    
+      } catch (e) {
+        console.log(e);
+    }
 })
 
 const Mapsets = {
@@ -288,8 +445,15 @@ const Mapsets = {
     getRasterLayers,
     renameRasterLayers,
     deleteRasterLayers,
-    // getRasterLayer,
-    createRasterLayer
+    getRasterLayer,
+    createRasterLayer,
+    deleteRasterLayer,
+    renderRaster,
+    getRasterColors,
+    renderGeoTiff,
+    renderVector,
+    vectorInfo,
+    vectorLayers
 }
 
 export default Mapsets
