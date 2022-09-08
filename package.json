@@ -1,6 +1,15 @@
 {
-    "name": "grass-js-client",
+    "name": "@openplains/grass-js-client",
     "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tomorrownow/grass-js-client.git"
+    },
+    "homepage": "https://tomorrownow.github.io/grass-js-client/",
+    "bugs": {
+        "url": "https://github.com/tomorrownow/grass-js-client/issues"
+    },
+    "license": "GPLv3",
     "source": "src/index.js",
     "main": "dist/main.js",
     "module": "dist/module.js",

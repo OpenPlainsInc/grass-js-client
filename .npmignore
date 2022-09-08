@@ -1,0 +1,11 @@
+src
+docs
+.github
+.nvmrc
+.parcelrc
+.vscode
+babel.config.json
+jsdoc.json
+coverage
+.parcel-cache
+jest.config.js
