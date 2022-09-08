@@ -373,7 +373,7 @@ const getRasterColors = (async (locationName, mapsetName, rasterName, options={}
  * @param {string} locationName 
  * @param {string} mapsetName 
  * @param {string} vectorName 
- * @returns 
+ * @returns {Promise<Object>}
  */
  const renderVector=  (async (locationName, mapsetName, vectorName)=> {
     try {
@@ -394,7 +394,7 @@ const getRasterColors = (async (locationName, mapsetName, rasterName, options={}
  * @param {string} locationName -The location name
  * @param {string} mapsetName - The name of the mapset that contains the required vector map layer"
  * @param {string} vectorName - The name of the vector map layer to get information about.
- * @returns 
+ * @returns {Promise<Object>}
  */
 const vectorInfo = (async (locationName, mapsetName, vectorName)=> {
     try {
@@ -414,7 +414,7 @@ const vectorInfo = (async (locationName, mapsetName, vectorName)=> {
  * @async
  * @param {string} locationName - The name of the location that should be accessed
  * @param {string} mapsetName - The name of the mapset from which the vector map layers should be listed
- * @returns 
+ * @returns {Promise<Object>}
  */
 const vectorLayers = (async (locationName, mapsetName) => {
     /**
