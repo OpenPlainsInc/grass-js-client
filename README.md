@@ -8,6 +8,10 @@ A JavaScript REST API client for django-actinia or Actinia REST APIs.
 
 grass.js works with [django-actinia](https://github.com/tomorrownow/django-actinia) and [Actinia 4.2.1](https://github.com/mundialis/actinia_core).
 
+## Documentation
+
+[https://tomorrownow.github.io/grass.js/](https://tomorrownow.github.io/grass.js/)
+
 ### Install (Coming Soon)
 
 ```bash
