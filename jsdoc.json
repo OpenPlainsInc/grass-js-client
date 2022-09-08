@@ -1,0 +1,46 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "source": {
+        "include": [
+            "./src",
+            "./README.md"
+        ],
+        "includePattern": "\\.js$",
+        "excludePattern": "(node_modules/|docs|\\test.js$)"
+    },
+    "sourceType": "module",
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "opts": {
+        "template": "./node_modules/docdash/",
+        "encoding": "utf8",
+        "destination": "docs/",
+        "recurse": true,
+        "verbose": true,
+        "package": "./package.json"
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    },
+    "docdash": {
+        "static": false,
+        "sort": true,
+        "search": true,
+        "collapse": true,
+        "typedefs": true,
+        "removeQuotes": "none",
+        "scripts": [],
+        "menu":{
+            "Github repo":{
+                "href":"https://github.com/tomorrownow/grass.js",
+                "target":"_blank",
+                "class":"menu-item",
+                "id":"repository"
+            }
+        }
+    }
+}

@@ -30,6 +30,10 @@
  * 
  */
 
+/**
+ * Locations module.
+ * @module
+ */
 import { SETTINGS } from "../settings"
 import { RESPONSESTRINGS } from "../strings"
 import { ProcessResponseModel } from "../Models/ProcessResponseModel";
@@ -46,22 +50,31 @@ const INFO_ROUTES = (locationName) => `${LOCATION_ROUTES(locationName)}/info`
 
 const LOCATION_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.location;
 
-const Locations = {
-    getLocations: (async (options={}) => {
-        /**
-         * Get a list of all available locations that are located in the GRASS database and the user has access to. Minimum required user role: user.
-         * Route: /locations/
-         * Returns: LocationListResponseModel
-        */
+/**
+ * Get a list of all available locations that are located in the GRASS database and the user has access to. Minimum required user role: user.
+ * Route: /locations/
+ * @function
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
+ * @return {Promise<LocationsListResponseModel|SimpleResponseModel>}
+ */
+const getLocations = (async (options={}) => {
         const url = new URL(LOCATION_ROUTES())
         const errorString = LOCATION_ERROR_RESPONSE.getLocations[SETTINGS.LANGUAGE]
         return apiRequest(url, "GET", LocationsListResponseModel, SimpleResponseModel, errorString, options)
-    }),
-    createLocation: (async (locationName, epsg, options={}) => {
-        /**
-         * Create a new location based on EPSG code in the user database. Minimum required user role: user.
-         * Route: /locations/{location_name}/
-        */
+    })
+
+
+/**
+ * Create a new location based on EPSG code in the user database. Minimum required user role: user.
+ * Route: /locations/{location_name}/
+ * @function
+ * @async
+ * @param {string} locationName - The locations name
+ * @param {string|number} epsg - A EPSG code  
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
+ * @return {Promise<ProcessResponseModel>}
+ */
+const createLocation = (async (locationName, epsg, options={}) => {
         const url = new URL(LOCATION_ROUTES(locationName))
         const errorString = LOCATION_ERROR_RESPONSE.createLocation[SETTINGS.LANGUAGE]
         const _options = {
@@ -69,25 +82,46 @@ const Locations = {
             ...options
         }
         return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, _options)
-    }),
-    deleteLocation: (async (locationName, options={}) => {
-        /**
-         * Delete an existing location and everything inside from the user database. Minimum required user role: user.
-         * Route: /locations/{location_name}/
-        */
+    })
+
+
+ /**
+  * Delete an existing location and everything inside from the user database. Minimum required user role: user.
+  * Route: /locations/{location_name}/
+  * @function
+  * @async
+  * @param {string} locationName - The locations name
+  * @param {Object} [options={}] - Optional request parameters set to fetch.
+  * @return {Promise<SimpleResponseModel>} 
+  */
+const deleteLocation = (async (locationName, options={}) => {
         const url = new URL(LOCATION_ROUTES(locationName))
         const errorString = LOCATION_ERROR_RESPONSE.deleteLocation[SETTINGS.LANGUAGE]
         return apiRequest(url, "DELETE", SimpleResponseModel, SimpleResponseModel, errorString, options)
-    }),
-    getLocation: (async (locationName, options={}) => {
-        /**
-         * Get the location projection and current computational region of the PERMANENT mapset. Minimum required user role: user.
-         * Route: /locations/{location_name}/info
-        */
+    })
+
+/**
+ * Get the location projection and current computational region of the PERMANENT mapset. Minimum required user role: user.
+ * Route: /locations/{location_name}/info
+ * @function
+ * @async
+ * @param {string} locationName - The locations name
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
+ * @return {Promise<ProcessResponseModel|SimpleResponseModel>}
+ * 
+ */   
+const getLocation = (async (locationName, options={}) => {
         const url = new URL(INFO_ROUTES(locationName))
         const errorString = LOCATION_ERROR_RESPONSE.getLocation[SETTINGS.LANGUAGE]
         return apiRequest(url, "GET", ProcessResponseModel, SimpleResponseModel, errorString, options)
-    }),
+    })
+
+
+ const Locations = {
+    getLocations,
+    createLocation,
+    deleteLocation,
+    getLocation
 }
 
 export default Locations

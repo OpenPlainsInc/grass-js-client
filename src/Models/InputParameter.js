@@ -1,11 +1,11 @@
 /*
  * Filename: InputParameter.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Wednesday May 25th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Thu Jun 09 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -36,7 +36,7 @@
  * @param {String} param The name of a GRASS GIS module parameter like *map* or *elevation*.
  * @param {String} value The value of the GRASS GIS module parameter. Raster, vector and STDS inputs must contain the mapset name in their id: *slope@PERMANENT*, if they are not located in the working mapset. Do not contain the mapset name in map names that are processed, since the mapsets are generated on demand using random names. Outputs are not allowed to contain mapset names.Files that are created in the process chain to exchange data can be specified using the *$file::unique_id* identifier. The **unique_id** will be replaced with a temporary file name, that is available in the whole process chain at runtime. The **unique_id**  is the identifier that can be used by different modules in a process chain to access the same temporary file or to prepare it for export.
  * @param {ImportDescription} [import_descr = undefined]
- * @example 
+ *
  */
 export class InputParameter {
     constructor({param, value, import_descr=undefined}) {

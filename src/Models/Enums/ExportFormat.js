@@ -1,11 +1,11 @@
 /*
  * Filename: ExportFormat.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Wednesday May 25th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed May 25 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -32,7 +32,8 @@
 
 
 /**
- * @description The format of the output file in case of raster, strds, vector layer or text file export. Raster layer export supports only GTiff and COG format, STRDS layer export supports only GTiff format and all other formats are vector layer export formats. If the *PostgeSQL* format was chosen, a postgis database string *dbstring* must be provided  so that the GRASS GIS module *v.out.ogr knows to which PostgreSQL database it should be connect. The name of the output layer can be specified as *output_layer* for PostgreSQL database exports. Some GRASS GIS modules allow the export of text files. These files can be exported and provided as downloadable link as well.
+ * @enum
+ * The format of the output file in case of raster, strds, vector layer or text file export. Raster layer export supports only GTiff and COG format, STRDS layer export supports only GTiff format and all other formats are vector layer export formats. If the *PostgeSQL* format was chosen, a postgis database string *dbstring* must be provided  so that the GRASS GIS module *v.out.ogr knows to which PostgreSQL database it should be connect. The name of the output layer can be specified as *output_layer* for PostgreSQL database exports. Some GRASS GIS modules allow the export of text files. These files can be exported and provided as downloadable link as well.
  * @param {String} name The export format type being accessed.
  */
  export class ExportFormat {

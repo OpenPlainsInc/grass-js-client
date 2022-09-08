@@ -29,7 +29,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
  */
-
+/**
+ * Mapsets module.
+ * @module
+ */
 import { SETTINGS } from "../settings"
 import { RESPONSESTRINGS } from "../strings"
 import { apiRequest } from "./utils";

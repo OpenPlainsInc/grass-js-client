@@ -30,6 +30,10 @@
  * 
  */
 
+/**
+ * Modules module.
+ * @module
+ */
 import { SETTINGS } from "../settings";
 import { RESPONSESTRINGS } from "../strings"
 import { apiRequest } from "./utils";
@@ -43,32 +47,46 @@ const MODULE_FAMILIES = ["d", "db", "g", "i", "m", "ps", "r", "r3", "t", "test",
 
 const MODULE_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.modules
 
-const Modules = {
-    getModules: (async (queryParams={}, options={}) => {
-        /**
-         * Get a list of modules. Minimum required user role: user.
-         * Route: /grass_modules
-         * Query Parameters:
-         * @param {String} tag - Filter for categories
-         * @param {String} category - Another filter for categories
-         * @param {String} family - Type of GRASS GIS module
-         * @param {String} record - If set to 'full', all information about the returned modules are given like in
-         *  the single module description. Depending on active cache, this response might run into a timeout. 
-         *  A filter can prevent this.
-        */  
+/**
+ * Get a list of modules. Minimum required user role: user.
+ * @route: /grass_modules
+ * @function
+ * @async
+ * @param {Object} [queryParams={}]
+ * @param {String} queryParams.tag - Filter for categories
+ * @param {String} queryParams.category - Another filter for categories
+ * @param {String} queryParams.family - Type of GRASS GIS module
+ * @param {String} queryParams.record - If set to 'full', all information about the returned modules are given like in
+ *  the single module description. Depending on active cache, this response might run into a timeout. 
+ *  A filter can prevent this.
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
+ * @return {Promise<ModuleListResponse|SimpleStatusCodeResponseModel>}
+ */ 
+const getModules = (async (queryParams={}, options={}) => {
         const url = new URL(API_HOST)
         const errorString = MODULE_ERROR_RESPONSE.getModules[SETTINGS.LANGUAGE]
         return apiRequest(url, "GET", ModuleListResponse, SimpleStatusCodeResponseModel, errorString, queryParams, options)
-    }),
-    getModule: (async (grassmodule, options={}) => {
-        /**
-         * Get the description of a module. Minimum required user role: user.Can be also used to reload cache for a certain modulefor the full module description in listModules.
-         * Route: /grass_modules/{grassmodule}
-        */
+    })
+
+/**
+* Get the description of a module. Minimum required user role: user.Can be also used to reload cache for a certain modulefor the full module description in listModules.
+* @route: /grass_modules/{grassmodule}
+* @function
+* @async
+* @param {string} grassmodule - The name of a GRASS module
+* @param {Object} [options={}] - Optional request parameters set to fetch.
+* @return {Promise<ModuleResponse|SimpleStatusCodeResponseModel>}
+*/ 
+const getModule = (async (grassmodule, options={}) => {
         const url = new URL(`${API_HOST}/${grassmodule}`)
         const errorString = MODULE_ERROR_RESPONSE.getModule[SETTINGS.LANGUAGE]
         return apiRequest(url, "POST", ModuleResponse, SimpleStatusCodeResponseModel, errorString, options)
     })
+
+
+const Modules = {
+    getModules,
+    getModule
 }
 
 export default Modules

@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Sun Sep 04 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -32,10 +32,31 @@
 
 import Locations from "./locations"
 import Mapsets from "./mapsets"
+import Modules from "./modules"
 
+/**
+ * Routes module.
+ * @module Routes
+ */
+
+/**
+ * Routes Module Object containing 
+ * @namespace
+ * @type {Object}
+ */
 const Routes = {
+    /**
+     * Refer to this by {@link Routes."Locations"}.
+     */
     Locations,
-    Mapsets
+    /**
+     * Refer to this by {@link Routes."Mapsets"}.
+     */
+    Mapsets,
+    /**
+     * Refer to this by {@link Routes."Modules"}.
+     */
+    Modules
 }
 
 export default Routes

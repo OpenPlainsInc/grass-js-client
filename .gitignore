@@ -106,3 +106,6 @@ dist
 # Parcel
 .parcel-cache
 
+# docs
+docs/
+

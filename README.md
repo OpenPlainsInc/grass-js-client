@@ -98,3 +98,11 @@ Run Jest test using the following commnad.
 ```bash
 npm run build
 ```
+
+#### Docs
+
+Run JSDocs to build docs into the `/docs` directory
+
+```bash
+npm run docs
+```

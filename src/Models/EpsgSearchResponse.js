@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Fri Aug 19 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -39,7 +39,7 @@ import { EpsgInfo } from "./EpsgInfo";
      * Create a EpsgSearchResponse object
      * @param {String} status - Resposne status e.g. "ok"
      * @param {Number} number_result - The number of return results.
-     * @param {Array.<EpsgInfo} [results = []] List of return epsg info.
+     * @param {Array.<EpsgInfo>} [results = []] List of return epsg info.
      */
     constructor({status, number_result, results}) {
         this.status = status;

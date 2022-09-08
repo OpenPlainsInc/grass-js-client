@@ -1,11 +1,11 @@
 /*
  * Filename: jsonparsers.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Tuesday May 24th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Thu Jun 09 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -32,6 +32,7 @@
 
 /**
  * Groups object data by key
+ * @function
  * @param {Array<Object>} data - Data that needs to be grouped
  * @param {String} key - The object key value to group by
  * @returns {Object} - The grouped data.
@@ -55,7 +56,8 @@ export const groupBy = function(data, key) { // `data` is an array of objects, `
   };
 
  /**
-  * Method to parser stdout return by GRASS
+  * Function to parse stdout return by GRASS
+  * @function
   * @param {String} sep - Delimiter seperating columns 
   * @returns {Object}
   */

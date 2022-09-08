@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Sun Sep 04 2022
+ * Last Modified: Wed Sep 07 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -34,9 +34,24 @@ import Models from "./Models";
 import Routes from "./Routes";
 import Utils from "./Utils";
 
+/**
+ * Grass module.
+ * @module Grass
+ * @namespace
+ * @type {Object}
+ */
 const Grass = {
+    /**
+     * Refer to this by {@link Grass."models"}.
+     */
     models: { ...Models },
+    /**
+     * Refer to this by {@link Grass."routes"}.
+     */
     routes: { ...Routes },
+    /**
+     * Refer to this by {@link Grass."utils"}.
+     */
     utils: { ...Utils }
 }
 
