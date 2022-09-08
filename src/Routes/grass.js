@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed Sep 07 2022
+ * Last Modified: Thu Sep 08 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -52,31 +52,6 @@ const clearLocalStorageData = () => {
 }
 
 const Grass = {
-    // getRasterLayers,
-    getRasterLayers: ( async (locationName, mapsetName) => {
-
-        // const resourceFunction = (locationName, mapsetName) => (async () => {
-        /**
-         * Route: /locations/{location_name}/mapsets/{mapsetName}/raster_layers
-        */
-       
-            try {
-                const url = new URL(`${API_HOST}/g/locations/${locationName}/mapsets/${mapsetName}/raster_layers`)
-                let res = await fetch(url, { 
-                    headers: {
-                    'Content-Type': 'application/json'
-                    }
-                });
-                let responseJson = await res.json();
-                console.log("response", responseJson)
-                let data = await responseJson.response
-                return data.process_results                    
-            } catch (e) {
-                console.error(e);
-                return e
-            }
-        
-    }),
     d: {
         renderRaster: (async (locationName, mapsetName, rasterName, aboutController=null)=> {
             try {

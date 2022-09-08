@@ -35,6 +35,24 @@ const RESPONSESTRINGS = {
             },
             "deleteMapsetLock": {
                 "en": "The following error occured trying to delete a lock:"
+            },
+            "getRasters": {
+                "en": "The following error occured trying to get rasters for mapset:"
+            },
+            "renameRasters": {
+                "en": "The following error occured trying to rename rasters for mapset:"
+            },
+            "deleteRasters": {
+                "en": "The following error occured trying to delete rasters for mapset:"
+            },
+            "getRaster": {
+                "en": "The following error occured trying to get raster for mapset:"
+            },
+            "createRaster": {
+                "en": "The following error occured trying to create raster for mapset:"
+            },
+            "deleteRaster": {
+                "en": "The following error occured trying to delete raster for mapset:"
             }
         },
         "modules": {

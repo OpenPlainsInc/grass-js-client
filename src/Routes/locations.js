@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed Sep 07 2022
+ * Last Modified: Thu Sep 08 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -81,7 +81,8 @@ const createLocation = (async (locationName, epsg, options={}) => {
             body: JSON.stringify({epsg}),
             ...options
         }
-        return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, _options)
+        let queryParams = {}
+        return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, _options)
     })
 
 
