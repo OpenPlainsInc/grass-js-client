@@ -1,4 +1,4 @@
-# grass-js-client (In Development)
+# (In Development) grass-js-client
 
 [![build](https://github.com/tomorrownow/grass-js-client/actions/workflows/node.js.yml/badge.svg)](https://github.com/tomorrownow/grass-js-client/actions/workflows/node.js.yml)
 
