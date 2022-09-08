@@ -36,7 +36,7 @@
         "scripts": [],
         "menu":{
             "Github repo":{
-                "href":"https://github.com/tomorrownow/grass.js",
+                "href":"https://github.com/tomorrownow/grass-js-client",
                 "target":"_blank",
                 "class":"menu-item",
                 "id":"repository"

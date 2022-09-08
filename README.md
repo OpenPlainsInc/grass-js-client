@@ -1,21 +1,21 @@
-# grass.js (In Development)
+# grass-js-client (In Development)
 
-[![build](https://github.com/tomorrownow/grass.js/actions/workflows/node.js.yml/badge.svg)](https://github.com/tomorrownow/grass.js/actions/workflows/node.js.yml)
+[![build](https://github.com/tomorrownow/grass-js-client/actions/workflows/node.js.yml/badge.svg)](https://github.com/tomorrownow/grass-js-client/actions/workflows/node.js.yml)
 
 A JavaScript REST API client for django-actinia or Actinia REST APIs.
 
 ## Getting Started
 
-grass.js works with [django-actinia](https://github.com/tomorrownow/django-actinia) and [Actinia 4.2.1](https://github.com/mundialis/actinia_core).
+grass-js-client works with [django-actinia](https://github.com/tomorrownow/django-actinia) and [Actinia 4.2.1](https://github.com/mundialis/actinia_core).
 
 ## Documentation
 
-[https://tomorrownow.github.io/grass.js/](https://tomorrownow.github.io/grass.js/)
+[https://tomorrownow.github.io/grass-js-client/](https://tomorrownow.github.io/grass-js-client/)
 
 ### Install (Coming Soon)
 
 ```bash
-npm install grass.js
+npm install grass-js-client
 ```
 
 ### Configuration

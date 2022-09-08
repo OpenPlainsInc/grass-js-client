@@ -1,5 +1,5 @@
 {
-    "name": "grass.js",
+    "name": "grass-js-client",
     "version": "0.0.1",
     "source": "src/index.js",
     "main": "dist/main.js",
