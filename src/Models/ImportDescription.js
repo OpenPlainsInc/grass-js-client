@@ -1,11 +1,11 @@
 /*
  * Filename: ImportDescription.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Wednesday May 25th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed May 25 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -30,7 +30,7 @@
  * 
  */
 
-import { Extent, ImportType, LandsatActor, Resample, Resolution, SentinelBand } from "./Enums"
+import { Resample, Resolution } from "./Enums"
 
 /**
  * @description Definition of sources to be imported as raster or vector map layer.

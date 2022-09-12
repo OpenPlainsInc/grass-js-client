@@ -1,0 +1,23 @@
+
+{
+    "extends": "eslint:recommended",
+    "globals": {
+        "fetch": false,
+        "URL": false,
+        "global": false,
+        "URLSearchParams": false
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 13
+    },
+    "env": {
+        "es6": true,
+        "es2022": true,
+        "jest": true,
+        "webextensions": true
+    },
+    "rules": {
+        "keyword-spacing": 2
+    }
+}

@@ -59,7 +59,7 @@ const RASTER_GEOTIFF_ASYNC_ROUTES = (locationName, mapsetName, rasterName, orig=
 }
  
 const VECTOR_ROUTES = (locationName, mapsetName, vectorName=undefined) => {
-    return rasterName ? `${MAPSET_ROUTES(locationName, mapsetName)}/vector_layers/${vectorName}` : `${MAPSET_ROUTES(locationName, mapsetName)}/vector_layers`
+    return vectorName ? `${MAPSET_ROUTES(locationName, mapsetName)}/vector_layers/${vectorName}` : `${MAPSET_ROUTES(locationName, mapsetName)}/vector_layers`
 }
 const VECTOR_RENDER_ROUTES = (locationName, mapsetName, vectorName) => `${VECTOR_ROUTES(locationName, mapsetName, vectorName)}/render`
 
@@ -272,7 +272,7 @@ const renderVector=  (async (locationName, mapsetName, vectorName)=> {
         const res = await fetch(url);
         return await res.json();
     } catch (e) {
-        console.log(e);
+        // console.log(e);
     }
 })
  
@@ -294,7 +294,7 @@ const vectorInfo = (async (locationName, mapsetName, vectorName)=> {
         const res = await fetch(url);
         return await res.json();
     } catch (e) {
-        console.log(e);
+        // console.log(e);
     }
 })
  
@@ -320,7 +320,7 @@ const vectors = (async (locationName, mapsetName) => {
         let data = await res.json();
         return data                    
     } catch (e) {
-        console.log(e);
+        // console.log(e);
     }
 })
  

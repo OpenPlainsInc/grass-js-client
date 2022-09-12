@@ -1,11 +1,11 @@
 /*
  * Filename: Extent.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Wednesday May 25th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed May 25 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -32,28 +32,8 @@
 
 
 /**
- * @param {Array.<Array>} bbox Bounding Box for the extent
- * @example [[30.192, -16.369, 42.834, -0.264]]
- */
-class SpatialExtent {
-    constructor(bbox) {
-        this.bbox = bbox;
-    }
-}
-
-
-/**
- * @param {Array} interval Start and end date.
- * @example [["2022-05-01", "2022-05-25"]]
- */
-class TemporalExtent {
-    constructor(interval) {
-        this.interval = interval;
-    }
-}
-
-/**
- * @description Spatio-temporal constraint defined by the userthroughout bbox and interval concept.
+ * @enum
+ * Spatio-temporal constraint defined by the userthroughout bbox and interval concept.
  * @param {String} name The export format type being accessed.
  */
  export class Extent {

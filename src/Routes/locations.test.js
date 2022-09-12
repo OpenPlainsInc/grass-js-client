@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed Sep 07 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -33,13 +33,10 @@
 import Locations from './locations';
 import { LocationsListResponseModel } from '../Models/LocationsListResponseModel';
 import { ProcessResponseModel } from '../Models/ProcessResponseModel';
-import { GrassModule } from '../Models/GrassModule';
-import { ApiInfoModel } from '../Models/ApiInfoModel';
-import { ProcessLog } from '../Models/ProcessLog';
 import { SimpleResponseModel } from '../Models/SimpleResponseModel';
 
 function setupFetchStub(data) {
-    return function fetchStub(_url) {
+    return function fetchStub() {
       return new Promise((resolve) => {
         resolve({
           ok: true,

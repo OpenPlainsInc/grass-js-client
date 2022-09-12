@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed Sep 07 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -46,6 +46,6 @@ export const apiRequest = (async (url, method, successResponseClass, errorRespon
         if (res.ok) return new successResponseClass({...data.response});
         return new errorResponseClass({...data.response});              
       } catch (err) {
-        console.error(`${errorString} ${err}`);
+        throw Error(`${errorString} ${err}`);
     }
 })

@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed Sep 07 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -36,7 +36,7 @@ import { EpsgInfo } from './EpsgInfo';
 
 
 function setupFetchStub(data) {
-    return function fetchStub(_url) {
+    return function fetchStub() {
       return new Promise((resolve) => {
         resolve({
           json: () =>

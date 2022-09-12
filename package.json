@@ -26,12 +26,15 @@
         "@parcel/transformer-js": "~2.7.0",
         "release-it": "^15.0.0",
         "jsdoc": "^3.6.11",
-        "docdash": "^1.2.0"
+        "docdash": "^1.2.0",
+        "eslint": "^8.23.1",
+        "prettier": "^2.7.1"
     },
     "scripts": {
         "watch": "parcel watch",
         "build": "parcel build",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+        "lint": "eslint . && prettier \"./src/**/*.{js,json,md}\" --list-different",
         "release": "release-it",
         "docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
     }

@@ -44,7 +44,7 @@ import opClient from "../Models/Client";
 const client = opClient;
 const API_HOST = `${client.host}/g/modules`;
 
-const MODULE_FAMILIES = ["d", "db", "g", "i", "m", "ps", "r", "r3", "t", "test", "v"]
+// const MODULE_FAMILIES = ["d", "db", "g", "i", "m", "ps", "r", "r3", "t", "test", "v"]
 
 const MODULE_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.modules
 

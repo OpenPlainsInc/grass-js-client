@@ -34,7 +34,6 @@ import Models from "./Models";
 import Routes from "./Routes";
 import Utils from "./Utils";
 
-const client = Models.opClient
 /**
  * Grass module.
  * @module Grass

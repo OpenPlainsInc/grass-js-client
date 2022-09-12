@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed Sep 07 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -58,10 +58,9 @@ export const groupBy = function(data, key) { // `data` is an array of objects, `
  /**
   * Function to parse stdout return by GRASS
   * @function
-  * @param {String} sep - Delimiter seperating columns 
   * @returns {Object}
   */
-export const parserProjection = (data, sep='|') => {
+export const parserProjection = (data) => {
   let newVal = data.replace(/"|\n/g, '').toString()
   return newVal
 }
