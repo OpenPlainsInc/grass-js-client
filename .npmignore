@@ -9,3 +9,7 @@ jsdoc.json
 coverage
 .parcel-cache
 jest.config.js
+.eslintignore
+.eslintrc.json
+.prettierignore
+.prettierrc
