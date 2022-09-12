@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed Sep 07 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -33,7 +33,7 @@
 import Locations from "./locations"
 import Mapsets from "./mapsets"
 import Modules from "./modules"
-
+import Layers from "./layers"
 /**
  * Routes module.
  * @module Routes
@@ -53,6 +53,10 @@ const Routes = {
      * Refer to this by {@link Routes."Mapsets"}.
      */
     Mapsets,
+    /**
+     * Refer to this by {@link Routes."Layers"}.
+     */
+    Layers,
     /**
      * Refer to this by {@link Routes."Modules"}.
      */
