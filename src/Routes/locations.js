@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Thu Sep 08 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -34,14 +34,17 @@
  * Locations module.
  * @module
  */
-import { SETTINGS } from "../settings"
+
+
 import { RESPONSESTRINGS } from "../strings"
 import { ProcessResponseModel } from "../Models/ProcessResponseModel";
 import { LocationsListResponseModel } from "../Models/LocationsListResponseModel";
 import { SimpleResponseModel } from "../Models/SimpleResponseModel";
 import { apiRequest } from "./utils";
+import opClient from "../Models/Client";
 
-const API_HOST = SETTINGS.API_HOST;
+const client = opClient;
+const API_HOST = client.host;
 const LOCATION_ROUTES = (locationName=undefined) => {
     return locationName ? `${API_HOST}/g/locations/${locationName}` : `${API_HOST}/g/locations`
 }
@@ -59,7 +62,7 @@ const LOCATION_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.location;
  */
 const getLocations = (async (options={}) => {
         const url = new URL(LOCATION_ROUTES())
-        const errorString = LOCATION_ERROR_RESPONSE.getLocations[SETTINGS.LANGUAGE]
+        const errorString = LOCATION_ERROR_RESPONSE.getLocations[client.language]
         return apiRequest(url, "GET", LocationsListResponseModel, SimpleResponseModel, errorString, options)
     })
 
@@ -76,7 +79,7 @@ const getLocations = (async (options={}) => {
  */
 const createLocation = (async (locationName, epsg, options={}) => {
         const url = new URL(LOCATION_ROUTES(locationName))
-        const errorString = LOCATION_ERROR_RESPONSE.createLocation[SETTINGS.LANGUAGE]
+        const errorString = LOCATION_ERROR_RESPONSE.createLocation[client.language]
         const _options = {
             body: JSON.stringify({epsg}),
             ...options
@@ -97,7 +100,7 @@ const createLocation = (async (locationName, epsg, options={}) => {
   */
 const deleteLocation = (async (locationName, options={}) => {
         const url = new URL(LOCATION_ROUTES(locationName))
-        const errorString = LOCATION_ERROR_RESPONSE.deleteLocation[SETTINGS.LANGUAGE]
+        const errorString = LOCATION_ERROR_RESPONSE.deleteLocation[client.language]
         return apiRequest(url, "DELETE", SimpleResponseModel, SimpleResponseModel, errorString, options)
     })
 
@@ -113,7 +116,7 @@ const deleteLocation = (async (locationName, options={}) => {
  */   
 const getLocation = (async (locationName, options={}) => {
         const url = new URL(INFO_ROUTES(locationName))
-        const errorString = LOCATION_ERROR_RESPONSE.getLocation[SETTINGS.LANGUAGE]
+        const errorString = LOCATION_ERROR_RESPONSE.getLocation[client.language]
         return apiRequest(url, "GET", ProcessResponseModel, SimpleResponseModel, errorString, options)
     })
 

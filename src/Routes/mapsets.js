@@ -33,16 +33,18 @@
  * Mapsets module.
  * @module
  */
-import { SETTINGS } from "../settings"
-import { RESPONSESTRINGS } from "../strings"
+
+import { RESPONSESTRINGS } from "../strings";
 import { apiRequest } from "./utils";
 import { ProcessResponseModel } from "../Models/ProcessResponseModel";
 import { MapsetInfoResponseModel } from "../Models/MapsetInfoResponseModel";
 import { SimpleResponseModel } from "../Models/SimpleResponseModel";
 import { ImagePNGResponse } from "../Models/ImagePNGResponse";
 import { RasterInfoResponseModel } from "../Models/RasterInfoResponseModel";
+import opClient from "../Models/Client";
 
-const API_HOST = `${SETTINGS.API_HOST}/g/locations`;
+const client = opClient;
+const API_HOST = `${client.host}/g/locations`;
 
 const MAPSET_ROUTES = (locationName, mapsetName=undefined) => {
     return mapsetName ? `${API_HOST}/${locationName}/mapsets/${mapsetName}` : `${API_HOST}/${locationName}/mapsets`
@@ -80,7 +82,7 @@ const MAPSET_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.mapset
  */
 const getMapsets = (async (locationName, options={}) => {
         const url = new URL(MAPSET_ROUTES(locationName))
-        const errorString = MAPSET_ERROR_RESPONSE.getMapsets[SETTINGS.LANGUAGE]
+        const errorString = MAPSET_ERROR_RESPONSE.getMapsets[client.language]
         return apiRequest(url, "GET", ProcessResponseModel, SimpleResponseModel, errorString, options)
     })
 
@@ -97,7 +99,7 @@ const getMapsets = (async (locationName, options={}) => {
  */
 const createMapset = (async (locationName, mapsetName, options={}) => {
         const url = new URL(MAPSET_ROUTES(locationName, mapsetName))
-        const errorString = MAPSET_ERROR_RESPONSE.createMapset[SETTINGS.LANGUAGE]
+        const errorString = MAPSET_ERROR_RESPONSE.createMapset[client.language]
         return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, options)
     })
 
@@ -114,7 +116,7 @@ const createMapset = (async (locationName, mapsetName, options={}) => {
  */
 const deleteMapset = (async (locationName, mapsetName, options={}) => {
         const url = new URL(MAPSET_ROUTES(locationName, mapsetName))
-        const errorString = MAPSET_ERROR_RESPONSE.deleteMapset[SETTINGS.LANGUAGE]
+        const errorString = MAPSET_ERROR_RESPONSE.deleteMapset[client.language]
         return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, options)
     })
 
@@ -130,7 +132,7 @@ const deleteMapset = (async (locationName, mapsetName, options={}) => {
  */
 const getMapset = (async (locationName, mapsetName, options={}) => {
         const url = new URL(INFO_ROUTES(locationName, mapsetName))
-        const errorString = MAPSET_ERROR_RESPONSE.getMapset[SETTINGS.LANGUAGE]
+        const errorString = MAPSET_ERROR_RESPONSE.getMapset[client.language]
         return apiRequest(url, "GET", MapsetInfoResponseModel, SimpleResponseModel, errorString, options)
     })
 
@@ -147,7 +149,7 @@ const getMapset = (async (locationName, mapsetName, options={}) => {
  */
 const getLock = (async (locationName, mapsetName, options={}) => {
          const url = new URL(LOCK_ROUTES(locationName, mapsetName))
-         const errorString = MAPSET_ERROR_RESPONSE.getMapsetLock[SETTINGS.LANGUAGE]
+         const errorString = MAPSET_ERROR_RESPONSE.getMapsetLock[client.language]
          return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, options)
     })
 
@@ -164,7 +166,7 @@ const getLock = (async (locationName, mapsetName, options={}) => {
  */
 const createLock = (async (locationName, mapsetName, options={}) => {
         const url = new URL(LOCK_ROUTES(locationName, mapsetName))
-        const errorString = MAPSET_ERROR_RESPONSE.createMapsetLock[SETTINGS.LANGUAGE]
+        const errorString = MAPSET_ERROR_RESPONSE.createMapsetLock[client.language]
         return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, options)
     })
 
@@ -181,7 +183,7 @@ const createLock = (async (locationName, mapsetName, options={}) => {
  */
 const deleteLock = (async (locationName, mapsetName, options={}) => {
         const url = new URL(LOCK_ROUTES(locationName, mapsetName))
-        const errorString = MAPSET_ERROR_RESPONSE.deleteMapsetLock[SETTINGS.LANGUAGE]
+        const errorString = MAPSET_ERROR_RESPONSE.deleteMapsetLock[client.language]
         return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, options)
     })
 
@@ -199,7 +201,7 @@ const deleteLock = (async (locationName, mapsetName, options={}) => {
  */
 const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefined, options={}) => {
     const url = new URL(RASTER_ROUTES(locationName, mapsetName))
-    const errorString = MAPSET_ERROR_RESPONSE.getRasters[SETTINGS.LANGUAGE]
+    const errorString = MAPSET_ERROR_RESPONSE.getRasters[client.language]
     let queryParams = searchpattern ? {pattern:searchpattern} : {}
     return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
 })
@@ -218,7 +220,7 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
  */
  const renameRasterLayers = ( async (locationName, mapsetName, renameList=undefined, options={}) => {
     const url = new URL(RASTER_ROUTES(locationName, mapsetName))
-    const errorString = MAPSET_ERROR_RESPONSE.renameRasters[SETTINGS.LANGUAGE]
+    const errorString = MAPSET_ERROR_RESPONSE.renameRasters[client.language]
     const _options = {
         body: JSON.stringify({rename_list: renameList}),
         ...options
@@ -242,7 +244,7 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
  */
  const deleteRasterLayers = ( async (locationName, mapsetName, searchpattern=undefined, options={}) => {
     const url = new URL(RASTER_ROUTES(locationName, mapsetName))
-    const errorString = MAPSET_ERROR_RESPONSE.deleteRasters[SETTINGS.LANGUAGE]
+    const errorString = MAPSET_ERROR_RESPONSE.deleteRasters[client.language]
     let queryParams = searchpattern ? {pattern:searchpattern} : {}
     return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
 })
@@ -262,7 +264,7 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
  */
  const getRasterLayer = ( async (locationName, mapsetName, rasterName, options={}) => {
     const url = new URL(RASTER_ROUTES(locationName, mapsetName, rasterName))
-    const errorString = MAPSET_ERROR_RESPONSE.getRaster[SETTINGS.LANGUAGE]
+    const errorString = MAPSET_ERROR_RESPONSE.getRaster[client.language]
     let queryParams = {}
     return apiRequest(url, "GET", RasterInfoResponseModel, RasterInfoResponseModel, errorString, queryParams, options)
 })
@@ -285,7 +287,7 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
  */
  const createRasterLayer = ( async (locationName, mapsetName, rasterName, data, options={}) => {
     const url = new URL(RASTER_ROUTES(locationName, mapsetName, rasterName))
-    const errorString = MAPSET_ERROR_RESPONSE.createRaster[SETTINGS.LANGUAGE]
+    const errorString = MAPSET_ERROR_RESPONSE.createRaster[client.language]
     let queryParams = {}
 
     //Set file upload options
@@ -312,7 +314,7 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
  */
  const deleteRasterLayer = ( async (locationName, mapsetName, rasterName, options={}) => {
     const url = new URL(RASTER_ROUTES(locationName, mapsetName, rasterName))
-    const errorString = MAPSET_ERROR_RESPONSE.deleteRaster[SETTINGS.LANGUAGE]
+    const errorString = MAPSET_ERROR_RESPONSE.deleteRaster[client.language]
     let queryParams = {}
     return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
 })
@@ -339,7 +341,7 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
  */
 const renderRaster = (async (locationName, mapsetName, rasterName, queryParams, options={})=> {
     const url = new URL(RASTER_RENDER_ROUTES(locationName, mapsetName, rasterName))
-    const errorString = MAPSET_ERROR_RESPONSE.renderRaster[SETTINGS.LANGUAGE]
+    const errorString = MAPSET_ERROR_RESPONSE.renderRaster[client.language]
     return apiRequest(url, "GET", ImagePNGResponse, ProcessResponseModel, errorString, queryParams, options)
 })
 
@@ -358,7 +360,7 @@ const renderRaster = (async (locationName, mapsetName, rasterName, queryParams, 
  */
 const renderGeoTiff = (async (locationName, mapsetName, rasterName, options={})=> {
     const url = new URL(RASTER_GEOTIFF_ASYNC_ROUTES(locationName, mapsetName, rasterName, true))
-    const errorString = MAPSET_ERROR_RESPONSE.rasterRenderGeoTiff[SETTINGS.LANGUAGE]
+    const errorString = MAPSET_ERROR_RESPONSE.rasterRenderGeoTiff[client.language]
     const queryParams = {}
     return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
 })
@@ -376,7 +378,7 @@ const renderGeoTiff = (async (locationName, mapsetName, rasterName, options={})=
  */
 const getRasterColors = (async (locationName, mapsetName, rasterName, options={})=> {
     const url = new URL(RASTER_COLOR_ROUTES(locationName, mapsetName, rasterName))
-    const errorString = MAPSET_ERROR_RESPONSE.rasterColor[SETTINGS.LANGUAGE]
+    const errorString = MAPSET_ERROR_RESPONSE.rasterColor[client.language]
     const queryParams = {}
     return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
 })

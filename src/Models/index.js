@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Thu Sep 08 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -30,6 +30,7 @@
  * 
  */
 
+import opClient from "./Client";
 import { GrassModule } from "./GrassModule";
 import { ProcessLog } from "./ProcessLog";
 import { ExportParam } from "./ExportParam";
@@ -58,6 +59,7 @@ import { RasterInfoModel } from "./RasterInfoModel";
 import { RasterInfoResponseModel } from "./RasterInfoResponseModel";
 
 const Models = {
+    opClient,
     GrassModule,
     ProcessLog,
     ExportParam,

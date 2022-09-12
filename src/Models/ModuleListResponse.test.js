@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Tue Sep 06 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -31,7 +31,7 @@
  */
 
 
-import {ModuleListResponse} from "./ModuleListResponse"
+import { ModuleListResponse } from "./ModuleListResponse"
 import { ModuleResponse } from "./ModuleResponse"
 
 describe("ModuleListResponse", ()=> {

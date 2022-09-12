@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Wed Sep 07 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -34,22 +34,24 @@
  * Modules module.
  * @module
  */
-import { SETTINGS } from "../settings";
 import { RESPONSESTRINGS } from "../strings"
 import { apiRequest } from "./utils";
 import { ModuleListResponse } from "../Models/ModuleListResponse";
 import { SimpleStatusCodeResponseModel } from "../Models/SimpleStatusCodeResponseModel";
 import { ModuleResponse } from "../Models/ModuleResponse";
+import opClient from "../Models/Client";
 
-const API_HOST = `${SETTINGS.API_HOST}/g/modules`;
+const client = opClient;
+const API_HOST = `${client.host}/g/modules`;
 
 const MODULE_FAMILIES = ["d", "db", "g", "i", "m", "ps", "r", "r3", "t", "test", "v"]
 
 const MODULE_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.modules
 
 /**
- * Get a list of modules. Minimum required user role: user.
- * @route: /grass_modules
+ * Get a list of modules.
+ * Minimum required user role: user.
+ * route: /grass_modules
  * @function
  * @async
  * @param {Object} [queryParams={}]
@@ -64,13 +66,15 @@ const MODULE_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.modules
  */ 
 const getModules = (async (queryParams={}, options={}) => {
         const url = new URL(API_HOST)
-        const errorString = MODULE_ERROR_RESPONSE.getModules[SETTINGS.LANGUAGE]
+        const errorString = MODULE_ERROR_RESPONSE.getModules[client.language]
         return apiRequest(url, "GET", ModuleListResponse, SimpleStatusCodeResponseModel, errorString, queryParams, options)
     })
 
 /**
-* Get the description of a module. Minimum required user role: user.Can be also used to reload cache for a certain modulefor the full module description in listModules.
-* @route: /grass_modules/{grassmodule}
+* Get the description of a module.
+* Can be also used to reload cache for a certain modulefor the full module description in listModules.
+* Minimum required user role: user.
+* route: /grass_modules/{grassmodule}
 * @function
 * @async
 * @param {string} grassmodule - The name of a GRASS module
@@ -79,7 +83,7 @@ const getModules = (async (queryParams={}, options={}) => {
 */ 
 const getModule = (async (grassmodule, options={}) => {
         const url = new URL(`${API_HOST}/${grassmodule}`)
-        const errorString = MODULE_ERROR_RESPONSE.getModule[SETTINGS.LANGUAGE]
+        const errorString = MODULE_ERROR_RESPONSE.getModule[client.language]
         return apiRequest(url, "POST", ModuleResponse, SimpleStatusCodeResponseModel, errorString, options)
     })
 

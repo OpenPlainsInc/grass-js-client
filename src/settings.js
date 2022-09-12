@@ -1,10 +1,9 @@
 const SETTINGS = {
     "API_HOST": "http://localhost:8005/savana",
-    "API_SOURCE": ["actinia", "openplains"],
+    "API_SOURCE": "OpenPlains", // Optional (Actinia, OpenPlains=default)
     "ACTINIA_VERSION": "4.2.1",
     "LANGUAGE": "en",
     "APP_NAME": "OpenPlains",
-    "APP_ICON": "",
     "PLUGINS": [
         {
             "name": "actinia_statistic_plugin",
