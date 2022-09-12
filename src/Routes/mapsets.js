@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Thu Sep 08 2022
+ * Last Modified: Mon Sep 12 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -59,11 +59,18 @@ const RASTER_GEOTIFF_ASYNC_ROUTES = (locationName, mapsetName, rasterName, orig=
     return orig ? `${RASTER_ROUTES(locationName, mapsetName, rasterName)}/geotiff_async_orig` : `${RASTER_ROUTES(locationName, mapsetName, rasterName)}/geotiff_async`
 }
 
+const VECTOR_ROUTES = (locationName, mapsetName, vectorName=undefined) => {
+    return rasterName ? `${MAPSET_ROUTES(locationName, mapsetName)}/vector_layers/${vectorName}` : `${MAPSET_ROUTES(locationName, mapsetName)}/vector_layers`
+}
+const VECTOR_RENDER_ROUTES = (locationName, mapsetName, vectorName) => `${VECTOR_ROUTES(locationName, mapsetName, vectorName)}/render`
+
+
 const MAPSET_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.mapset
 
 
 /**
- * Get a list of all mapsets that are located in a specific location. Minimum required user role: user.
+ * Get a list of all mapsets that are located in a specific location.
+ * Minimum required user role: user.
  * Route: /locations/{location_name}/mapsets
  * @function
  * @async
@@ -78,7 +85,8 @@ const getMapsets = (async (locationName, options={}) => {
     })
 
 /**
- * Create a new mapset in an existing location. Minimum required user role: user.
+ * Create a new mapset in an existing location.
+ * Minimum required user role: user.
  * Route: /locations/{location_name}/mapsets/{mapsetName}
  * @function
  * @async
@@ -94,7 +102,8 @@ const createMapset = (async (locationName, mapsetName, options={}) => {
     })
 
 /**
- * Delete an existing mapset. Minimum required user role: user.
+ * Delete an existing mapset.
+ * Minimum required user role: user.
  * Route: /locations/{location_name}/mapsets/{mapsetName}
  * @function
  * @async
@@ -126,7 +135,8 @@ const getMapset = (async (locationName, mapsetName, options={}) => {
     })
 
 /**
- * Get the location/mapset lock status. Minimum required user role: admin.
+ * Get the location/mapset lock status.
+ * Minimum required user role: admin.
  * Route: /locations/{location_name}/mapsets/{mapset_name}
  * @function
  * @async
@@ -142,7 +152,8 @@ const getLock = (async (locationName, mapsetName, options={}) => {
     })
 
 /**
- * Create a location/mapset lock. A location/mapset lock can be created so that no operation can be performed on it until it is unlocked. Minimum required user role: admin.
+ * Create a location/mapset lock. A location/mapset lock can be created so that no operation can be performed on it until it is unlocked.
+ * Minimum required user role: admin.
  * Route: /locations/{location_name}/mapsets/{mapset_name}/lock
  * @function
  * @async
@@ -158,7 +169,8 @@ const createLock = (async (locationName, mapsetName, options={}) => {
     })
 
 /**
- * Delete a location/mapset lock. A location/mapset lock can be deleted so that operation can be performed on it until it is locked. Minimum required user role: admin.
+ * Delete a location/mapset lock. A location/mapset lock can be deleted so that operation can be performed on it until it is locked.
+ * Minimum required user role: admin.
  * Route: /locations/{location_name}/mapsets/{mapset_name}
  * @function
  * @async
@@ -174,7 +186,8 @@ const deleteLock = (async (locationName, mapsetName, options={}) => {
     })
 
 /**
- * Get a list of raster map layer names that are located in a specific location/mapset. Minimum required user role: user.
+ * Get a list of raster map layer names that are located in a specific location/mapset.
+ * Minimum required user role: user.
  * Route: /locations/{location_name}/mapsets/{mapsetName}/raster_layers
  * @function
  * @async
@@ -192,7 +205,8 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
 })
 
 /**
- * Rename a single raster map layer or a list of raster map layers that are located in a specific location/mapset. Minimum required user role: user.
+ * Rename a single raster map layer or a list of raster map layers that are located in a specific location/mapset.
+ * Minimum required user role: user.
  * Route: /locations/{location_name}/mapsets/{mapsetName}/raster_layers
  * @function
  * @async
@@ -215,7 +229,8 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
 
 
 /**
- * Delete a single raster map layer or a list of raster map layer names that are located in a specific location/mapset. Minimum required user role: user."
+ * Delete a single raster map layer or a list of raster map layer names that are located in a specific location/mapset.
+ * Minimum required user role: user.
  * Route: /locations/{location_name}/mapsets/{mapsetName}/raster_layers
  * @function
  * @async
@@ -234,7 +249,8 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
 
 
 /**
- * Get information about an existing raster map layer. Minimum required user role: user.
+ * Get information about an existing raster map layer.
+ * Minimum required user role: user.
  * Route: /locations/{location_name}/mapsets/{mapsetName}/raster_layers/{raster_name}
  * @function
  * @async
@@ -250,7 +266,6 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
     let queryParams = {}
     return apiRequest(url, "GET", RasterInfoResponseModel, RasterInfoResponseModel, errorString, queryParams, options)
 })
-
 
 
 /**
@@ -304,7 +319,9 @@ const getRasterLayers = ( async (locationName, mapsetName, searchpattern=undefin
 
 
 /**
- * Render a raster map layer as a PNG image. Minimum required user role: user.
+ * Render a raster map layer as a PNG image. 
+ * Minimum required user role: user.
+ * Route: /locations/{location_name}/mapsets/{mapsetName}/raster_layers/{raster_name}/render
  * @function
  * @async
  * @param {String} locationName - The name of the location that should be accessed.
@@ -367,17 +384,18 @@ const getRasterColors = (async (locationName, mapsetName, rasterName, options={}
 
 /**
  * Render a single vector m…quired user role: user.
+ * Route: /locations/{location_name}/mapsets/{mapsetName}/vector_layers/{vector_name}/render
  * @todo Implment correctly
  * @function
  * @async
- * @param {string} locationName 
- * @param {string} mapsetName 
- * @param {string} vectorName 
+ * @param {string} locationName - The location name
+ * @param {string} mapsetName - The name of the mapset that contains the required vector map layer
+ * @param {string} vectorName The name of the vector map layer to render.
  * @returns {Promise<Object>}
  */
  const renderVector=  (async (locationName, mapsetName, vectorName)=> {
     try {
-        let url = new URL(`${API_HOST}/v/locations/${locationName}/mapsets/${mapsetName}/vector_layers/${vectorName}/render`)
+        const url = new URL(VECTOR_RENDER_ROUTES(locationName, mapsetName, vectorName))
         const res = await fetch(url);
         return await res.json();
     } catch (e) {
@@ -388,6 +406,7 @@ const getRasterColors = (async (locationName, mapsetName, rasterName, options={}
 /**
  * Get information about an existing vector map layer.
  * Minimum required user role: user.
+ * Route: /locations/{location_name}/mapsets/{mapsetName}/vector_layers/{vector_name}
  * @todo Implment correctly
  * @function
  * @async
@@ -398,7 +417,7 @@ const getRasterColors = (async (locationName, mapsetName, rasterName, options={}
  */
 const vectorInfo = (async (locationName, mapsetName, vectorName)=> {
     try {
-        let url = new URL(`${API_HOST}/r/locations/${locationName}/mapsets/${mapsetName}/vector_layers/${vectorName}`)
+        const url = new URL(VECTOR_ROUTES(locationName, mapsetName, vectorName))
         const res = await fetch(url);
         return await res.json();
     } catch (e) {
@@ -408,7 +427,8 @@ const vectorInfo = (async (locationName, mapsetName, vectorName)=> {
 
 /**
  * Get a list of vector map layer names that are located in a specific location/mapset.
- * Minimum required user role: user.
+ * Minimum required user role: user
+ * Route: /locations/{location_name}/mapsets/{mapsetName}/vector_layers
  * @todo Implment correctly
  * @function
  * @async
@@ -417,11 +437,8 @@ const vectorInfo = (async (locationName, mapsetName, vectorName)=> {
  * @returns {Promise<Object>}
  */
 const vectorLayers = (async (locationName, mapsetName) => {
-    /**
-     * Route: /locations/{location_name}/mapsets/{mapsetName}/vector_layers
-    */
     try {
-        const url = new URL(`${API_HOST}/g/locations/${locationName}/mapsets/${mapsetName}/vector_layers`)
+        const url = new URL(VECTOR_ROUTES(locationName, mapsetName))
         let res = await fetch(url, { 
             headers: {
             'Content-Type': 'application/json'
