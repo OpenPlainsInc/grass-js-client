@@ -12,7 +12,7 @@ grass-js-client works with [django-actinia](https://github.com/tomorrownow/djang
 
 [https://tomorrownow.github.io/grass-js-client/](https://tomorrownow.github.io/grass-js-client/)
 
-### Install (Coming Soon)
+### Install
 
 ```bash
 npm install grass-js-client
@@ -92,6 +92,7 @@ npm install
 Run Jest test using the following commnad.
 
 ```bash
+npm run lint
 npm run test
 ```
 
