@@ -1,6 +1,6 @@
 {
     "name": "@openplains/grass-js-client",
-    "version": "1.0.0",
+    "version": "1.0.0-alpha.1",
     "repository": {
         "type": "git",
         "url": "https://github.com/tomorrownow/grass-js-client.git"
