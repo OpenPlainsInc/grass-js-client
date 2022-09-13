@@ -24,6 +24,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
       - name: Checkout
         uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -42,7 +45,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: './docs/@openplains/grass-js-client/1.0.0'
+          path: './docs/@openplains/grass-js-client/${{ steps.package-version.outputs.current-version}}'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
