@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Mon Sep 12 2022
+ * Last Modified: Tue Sep 13 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -35,7 +35,7 @@
  */
 
 import { RESPONSESTRINGS } from "../strings";
-import { apiRequest } from "./utils";
+import { ApiRequest } from "./utils";
 import { ProcessResponseModel } from "../Models/ProcessResponseModel";
 import { MapsetInfoResponseModel } from "../Models/MapsetInfoResponseModel";
 import { SimpleResponseModel } from "../Models/SimpleResponseModel";
@@ -66,10 +66,14 @@ const MAPSET_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.mapset
  * @returns {Promise<ProcessResponseModel|SimpleResponseModel>}
  */
 const getMapsets = (async (locationName, options={}) => {
-        const url = new URL(MAPSET_ROUTES(locationName))
-        const errorString = MAPSET_ERROR_RESPONSE.getMapsets[client.language]
-        return apiRequest(url, "GET", ProcessResponseModel, SimpleResponseModel, errorString, options)
-    })
+    return new ApiRequest({
+        url: new URL(MAPSET_ROUTES(locationName)),
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: SimpleResponseModel, 
+        errorString: MAPSET_ERROR_RESPONSE.getMapsets[client.language], 
+        options:options
+    }).getRequest() 
+})
 
 /**
  * Create a new mapset in an existing location.
@@ -83,10 +87,14 @@ const getMapsets = (async (locationName, options={}) => {
  * @returns {Promise<ProcessResponseModel>}
  */
 const createMapset = (async (locationName, mapsetName, options={}) => {
-        const url = new URL(MAPSET_ROUTES(locationName, mapsetName))
-        const errorString = MAPSET_ERROR_RESPONSE.createMapset[client.language]
-        return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, options)
-    })
+    return new ApiRequest({
+        url: new URL(MAPSET_ROUTES(locationName, mapsetName)),
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: SimpleResponseModel, 
+        errorString: MAPSET_ERROR_RESPONSE.createMapset[client.language], 
+        options:options
+    }).postRequest() 
+})
 
 /**
  * Delete an existing mapset.
@@ -100,10 +108,14 @@ const createMapset = (async (locationName, mapsetName, options={}) => {
  * @returns {Promise<ProcessResponseModel>}
  */
 const deleteMapset = (async (locationName, mapsetName, options={}) => {
-        const url = new URL(MAPSET_ROUTES(locationName, mapsetName))
-        const errorString = MAPSET_ERROR_RESPONSE.deleteMapset[client.language]
-        return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, options)
-    })
+    return new ApiRequest({
+        url: new URL(MAPSET_ROUTES(locationName, mapsetName)),
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: MAPSET_ERROR_RESPONSE.deleteMapset[client.language], 
+        options:options
+    }).deleteRequest() 
+})
 
 /**
  * The current computational region of the mapset and the projection of the location
@@ -116,10 +128,16 @@ const deleteMapset = (async (locationName, mapsetName, options={}) => {
  * @returns {Promise<MapsetInfoResponseModel|SimpleResponseModel>}
  */
 const getMapset = (async (locationName, mapsetName, options={}) => {
-        const url = new URL(INFO_ROUTES(locationName, mapsetName))
-        const errorString = MAPSET_ERROR_RESPONSE.getMapset[client.language]
-        return apiRequest(url, "GET", MapsetInfoResponseModel, SimpleResponseModel, errorString, options)
-    })
+    const url = new URL(INFO_ROUTES(locationName, mapsetName))
+    const errorString = MAPSET_ERROR_RESPONSE.getMapset[client.language]
+    return new ApiRequest({
+        url: url,
+        successResponseClass: MapsetInfoResponseModel, 
+        errorResponseClass: SimpleResponseModel, 
+        errorString: errorString, 
+        options:options
+    }).getRequest() 
+})
 
 /**
  * Get the location/mapset lock status.
@@ -133,10 +151,16 @@ const getMapset = (async (locationName, mapsetName, options={}) => {
  * @returns {Promise<ProcessResponseModel>}
  */
 const getLock = (async (locationName, mapsetName, options={}) => {
-         const url = new URL(LOCK_ROUTES(locationName, mapsetName))
-         const errorString = MAPSET_ERROR_RESPONSE.getMapsetLock[client.language]
-         return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, options)
-    })
+    const url = new URL(LOCK_ROUTES(locationName, mapsetName))
+    const errorString = MAPSET_ERROR_RESPONSE.getMapsetLock[client.language]
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString, 
+        options:options
+    }).getRequest() 
+})
 
 /**
  * Create a location/mapset lock. A location/mapset lock can be created so that no operation can be performed on it until it is unlocked.
@@ -150,10 +174,16 @@ const getLock = (async (locationName, mapsetName, options={}) => {
  * @returns {Promise<ProcessResponseModel>}
  */
 const createLock = (async (locationName, mapsetName, options={}) => {
-        const url = new URL(LOCK_ROUTES(locationName, mapsetName))
-        const errorString = MAPSET_ERROR_RESPONSE.createMapsetLock[client.language]
-        return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, options)
-    })
+    const url = new URL(LOCK_ROUTES(locationName, mapsetName))
+    const errorString = MAPSET_ERROR_RESPONSE.createMapsetLock[client.language]
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString, 
+        options:options
+    }).postRequest() 
+})
 
 /**
  * Delete a location/mapset lock. A location/mapset lock can be deleted so that operation can be performed on it until it is locked.
@@ -169,7 +199,13 @@ const createLock = (async (locationName, mapsetName, options={}) => {
 const deleteLock = (async (locationName, mapsetName, options={}) => {
         const url = new URL(LOCK_ROUTES(locationName, mapsetName))
         const errorString = MAPSET_ERROR_RESPONSE.deleteMapsetLock[client.language]
-        return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, options)
+        return new ApiRequest({
+            url: url,
+            successResponseClass: ProcessResponseModel, 
+            errorResponseClass: ProcessResponseModel, 
+            errorString: errorString, 
+            options:options
+        }).deleteRequest()
     })
 
 const Mapsets = {

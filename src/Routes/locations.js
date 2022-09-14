@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Mon Sep 12 2022
+ * Last Modified: Tue Sep 13 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -40,7 +40,7 @@ import { RESPONSESTRINGS } from "../strings"
 import { ProcessResponseModel } from "../Models/ProcessResponseModel";
 import { LocationsListResponseModel } from "../Models/LocationsListResponseModel";
 import { SimpleResponseModel } from "../Models/SimpleResponseModel";
-import { apiRequest } from "./utils";
+import { ApiRequest } from "./utils";
 import opClient from "../Models/Client";
 
 const client = opClient;
@@ -61,10 +61,14 @@ const LOCATION_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.location;
  * @return {Promise<LocationsListResponseModel|SimpleResponseModel>}
  */
 const getLocations = (async (options={}) => {
-        const url = new URL(LOCATION_ROUTES())
-        const errorString = LOCATION_ERROR_RESPONSE.getLocations[client.language]
-        return apiRequest(url, "GET", LocationsListResponseModel, SimpleResponseModel, errorString, options)
-    })
+    return new ApiRequest({
+        url: new URL(LOCATION_ROUTES()),
+        successResponseClass: LocationsListResponseModel, 
+        errorResponseClass: SimpleResponseModel, 
+        errorString: LOCATION_ERROR_RESPONSE.getLocations[client.language], 
+        options:options
+    }).getRequest()
+})
 
 
 /**
@@ -78,15 +82,17 @@ const getLocations = (async (options={}) => {
  * @return {Promise<ProcessResponseModel>}
  */
 const createLocation = (async (locationName, epsg, options={}) => {
-        const url = new URL(LOCATION_ROUTES(locationName))
-        const errorString = LOCATION_ERROR_RESPONSE.createLocation[client.language]
-        const _options = {
+    return new ApiRequest({
+        url: new URL(LOCATION_ROUTES(locationName)),
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: LOCATION_ERROR_RESPONSE.createLocation[client.language], 
+        options: {
             body: JSON.stringify({epsg}),
             ...options
         }
-        let queryParams = {}
-        return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, _options)
-    })
+    }).postRequest()
+})
 
 
  /**
@@ -99,10 +105,14 @@ const createLocation = (async (locationName, epsg, options={}) => {
   * @return {Promise<SimpleResponseModel>} 
   */
 const deleteLocation = (async (locationName, options={}) => {
-        const url = new URL(LOCATION_ROUTES(locationName))
-        const errorString = LOCATION_ERROR_RESPONSE.deleteLocation[client.language]
-        return apiRequest(url, "DELETE", SimpleResponseModel, SimpleResponseModel, errorString, options)
-    })
+    return new ApiRequest({
+        url: new URL(LOCATION_ROUTES(locationName)),
+        successResponseClass: SimpleResponseModel, 
+        errorResponseClass: SimpleResponseModel, 
+        errorString: LOCATION_ERROR_RESPONSE.deleteLocation[client.language], 
+        options
+    }).deleteRequest()
+})
 
 /**
  * Get the location projection and current computational region of the PERMANENT mapset. Minimum required user role: user.
@@ -115,10 +125,14 @@ const deleteLocation = (async (locationName, options={}) => {
  * 
  */   
 const getLocation = (async (locationName, options={}) => {
-        const url = new URL(INFO_ROUTES(locationName))
-        const errorString = LOCATION_ERROR_RESPONSE.getLocation[client.language]
-        return apiRequest(url, "GET", ProcessResponseModel, SimpleResponseModel, errorString, options)
-    })
+    return new ApiRequest({
+        url: new URL(INFO_ROUTES(locationName)),
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: SimpleResponseModel, 
+        errorString: LOCATION_ERROR_RESPONSE.getLocation[client.language], 
+        options
+    }).getRequest()
+})
 
 
  const Locations = {

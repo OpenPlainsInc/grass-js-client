@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Tue Sep 06 2022
+ * Last Modified: Tue Sep 13 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -33,8 +33,6 @@
 import { RequestStatus } from "./Enums";
 import { ModuleResponse } from "./ModuleResponse";
 /**
- * @Actinia
- * @version 4.1.0
  * Class that defines the response schema for module lists.
  */
  export class ModuleListResponse {
@@ -42,7 +40,7 @@ import { ModuleResponse } from "./ModuleResponse";
      * Create ProcessLog instance
      * @param {Object}
      * @param {String} status The status of the resource, values: accepted, running, finished, terminated, error
-     * @param {Array<ModuleResponse>} processes The list of modules in GRASS GIS
+     * @param {ModuleResponse[]} processes The list of modules in GRASS GIS
      */
     constructor({status, processes=[]}) {
         this.status = new RequestStatus(status).validate();

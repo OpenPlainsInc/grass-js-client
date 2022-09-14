@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Mon Sep 12 2022
+ * Last Modified: Tue Sep 13 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -36,7 +36,7 @@
  */
 
 import { RESPONSESTRINGS } from "../strings";
-import { apiRequest } from "./utils";
+import { ApiRequest } from "./utils";
 import { ProcessResponseModel } from "../Models/ProcessResponseModel";
 import { ImagePNGResponse } from "../Models/ImagePNGResponse";
 import { RasterInfoResponseModel } from "../Models/RasterInfoResponseModel";
@@ -81,7 +81,14 @@ const getRasters = ( async (locationName, mapsetName, searchpattern=undefined, o
     const url = new URL(RASTER_ROUTES(locationName, mapsetName))
     const errorString = MAPSET_ERROR_RESPONSE.getRasters[client.language]
     let queryParams = searchpattern ? {pattern:searchpattern} : {}
-    return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString, 
+        queryParams: queryParams,
+        options:options
+    }).getRequest()
 })
  
 /**
@@ -103,8 +110,14 @@ const renameRasters = ( async (locationName, mapsetName, renameList=undefined, o
         body: JSON.stringify({rename_list: renameList}),
         ...options
     }
-    let queryParams = {}
-    return apiRequest(url, "PUT", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, _options)
+
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString,
+        options:_options
+    }).putRequest()
 })
 
 /**
@@ -123,7 +136,14 @@ const deleteRasters = ( async (locationName, mapsetName, searchpattern=undefined
     const url = new URL(RASTER_ROUTES(locationName, mapsetName))
     const errorString = MAPSET_ERROR_RESPONSE.deleteRasters[client.language]
     let queryParams = searchpattern ? {pattern:searchpattern} : {}
-    return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString, 
+        queryParams: queryParams,
+        options:options
+    }).deleteRequest()
 })
  
 /**
@@ -141,8 +161,13 @@ const deleteRasters = ( async (locationName, mapsetName, searchpattern=undefined
 const getRaster = ( async (locationName, mapsetName, rasterName, options={}) => {
     const url = new URL(RASTER_ROUTES(locationName, mapsetName, rasterName))
     const errorString = MAPSET_ERROR_RESPONSE.getRaster[client.language]
-    let queryParams = {}
-    return apiRequest(url, "GET", RasterInfoResponseModel, RasterInfoResponseModel, errorString, queryParams, options)
+    return new ApiRequest({
+        url: url,
+        successResponseClass: RasterInfoResponseModel, 
+        errorResponseClass: RasterInfoResponseModel, 
+        errorString: errorString,
+        options:options
+    }).getRequest()
 })
  
 /**
@@ -163,7 +188,6 @@ const getRaster = ( async (locationName, mapsetName, rasterName, options={}) => 
 const createRaster = ( async (locationName, mapsetName, rasterName, data, options={}) => {
     const url = new URL(RASTER_ROUTES(locationName, mapsetName, rasterName))
     const errorString = MAPSET_ERROR_RESPONSE.createRaster[client.language]
-    let queryParams = {}
  
     //Set file upload options
     let _options = {
@@ -173,7 +197,14 @@ const createRaster = ( async (locationName, mapsetName, rasterName, data, option
         },
         body: data
     }
-    return apiRequest(url, "POST", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, _options)
+   
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString,
+        options:_options
+    }).postRequest()
 })
  
 /**
@@ -190,8 +221,13 @@ const createRaster = ( async (locationName, mapsetName, rasterName, data, option
 const deleteRaster = ( async (locationName, mapsetName, rasterName, options={}) => {
     const url = new URL(RASTER_ROUTES(locationName, mapsetName, rasterName))
     const errorString = MAPSET_ERROR_RESPONSE.deleteRaster[client.language]
-    let queryParams = {}
-    return apiRequest(url, "DELETE", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString, 
+        options:options
+    }).deleteRequest()
 })
 
 /**
@@ -216,7 +252,14 @@ const deleteRaster = ( async (locationName, mapsetName, rasterName, options={}) 
 const renderRaster = (async (locationName, mapsetName, rasterName, queryParams, options={})=> {
     const url = new URL(RASTER_RENDER_ROUTES(locationName, mapsetName, rasterName))
     const errorString = MAPSET_ERROR_RESPONSE.renderRaster[client.language]
-    return apiRequest(url, "GET", ImagePNGResponse, ProcessResponseModel, errorString, queryParams, options)
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ImagePNGResponse, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString,
+        queryParams:queryParams,
+        options:options
+    }).getRequest()
 })
 
 /**
@@ -234,8 +277,13 @@ const renderRaster = (async (locationName, mapsetName, rasterName, queryParams, 
 const renderGeoTiff = (async (locationName, mapsetName, rasterName, options={})=> {
     const url = new URL(RASTER_GEOTIFF_ASYNC_ROUTES(locationName, mapsetName, rasterName, true))
     const errorString = MAPSET_ERROR_RESPONSE.rasterRenderGeoTiff[client.language]
-    const queryParams = {}
-    return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString,
+        options:options
+    }).getRequest()
 })
 
 /**
@@ -251,8 +299,13 @@ const renderGeoTiff = (async (locationName, mapsetName, rasterName, options={})=
 const getRasterColors = (async (locationName, mapsetName, rasterName, options={})=> {
     const url = new URL(RASTER_COLOR_ROUTES(locationName, mapsetName, rasterName))
     const errorString = MAPSET_ERROR_RESPONSE.rasterColor[client.language]
-    const queryParams = {}
-    return apiRequest(url, "GET", ProcessResponseModel, ProcessResponseModel, errorString, queryParams, options)
+    return new ApiRequest({
+        url: url,
+        successResponseClass: ProcessResponseModel, 
+        errorResponseClass: ProcessResponseModel, 
+        errorString: errorString,
+        options:options
+    }).getRequest()
 })
  
 /**
@@ -264,16 +317,16 @@ const getRasterColors = (async (locationName, mapsetName, rasterName, options={}
  * @param {string} locationName - The location name
  * @param {string} mapsetName - The name of the mapset that contains the required vector map layer
  * @param {string} vectorName The name of the vector map layer to render.
- * @returns {Promise<Object>}
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
+ * @returns {Promise<ImagePNGResponse|ProcessResponseModel>}
  */
-const renderVector=  (async (locationName, mapsetName, vectorName)=> {
-    try {
-        const url = new URL(VECTOR_RENDER_ROUTES(locationName, mapsetName, vectorName))
-        const res = await fetch(url);
-        return await res.json();
-    } catch (e) {
-        // console.log(e);
-    }
+const renderVector=  (async (locationName, mapsetName, vectorName, options={})=> {
+    return new ApiRequest({
+        url: new URL(VECTOR_RENDER_ROUTES(locationName, mapsetName, vectorName)),
+        successResponseClass: ImagePNGResponse,
+        errorResponseClass: ProcessResponseModel,
+        options:options
+    }).getRequest()
 })
  
 /**
@@ -286,16 +339,16 @@ const renderVector=  (async (locationName, mapsetName, vectorName)=> {
  * @param {string} locationName -The location name
  * @param {string} mapsetName - The name of the mapset that contains the required vector map layer"
  * @param {string} vectorName - The name of the vector map layer to get information about.
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
  * @returns {Promise<Object>}
  */
-const vectorInfo = (async (locationName, mapsetName, vectorName)=> {
-    try {
-        const url = new URL(VECTOR_ROUTES(locationName, mapsetName, vectorName))
-        const res = await fetch(url);
-        return await res.json();
-    } catch (e) {
-        // console.log(e);
-    }
+const vectorInfo = (async (locationName, mapsetName, vectorName, options={})=> {
+    return new ApiRequest({
+        url: new URL(VECTOR_ROUTES(locationName, mapsetName, vectorName)),
+        successResponseClass: Object,
+        errorResponseClass: Object,
+        options: options
+    }).getRequest()
 })
  
 /**
@@ -307,21 +360,16 @@ const vectorInfo = (async (locationName, mapsetName, vectorName)=> {
  * @async
  * @param {string} locationName - The name of the location that should be accessed
  * @param {string} mapsetName - The name of the mapset from which the vector map layers should be listed
+ * @param {Object} [options={}] - Optional request parameters set to fetch.
  * @returns {Promise<Object>}
  */
-const vectors = (async (locationName, mapsetName) => {
-    try {
-        const url = new URL(VECTOR_ROUTES(locationName, mapsetName))
-        let res = await fetch(url, { 
-            headers: {
-            'Content-Type': 'application/json'
-            }
-        });
-        let data = await res.json();
-        return data                    
-    } catch (e) {
-        // console.log(e);
-    }
+const vectors = (async (locationName, mapsetName, options={}) => {
+    return new ApiRequest({
+        url: new URL(VECTOR_ROUTES(locationName, mapsetName)),
+        successResponseClass: Object,
+        errorResponseClass: Object,
+        options: options
+    }).getRequest()
 })
  
 const Layers = {

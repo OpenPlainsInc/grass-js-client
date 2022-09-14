@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Mon Sep 12 2022
+ * Last Modified: Tue Sep 13 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -35,7 +35,7 @@
  * @module
  */
 import { RESPONSESTRINGS } from "../strings"
-import { apiRequest } from "./utils";
+import { ApiRequest } from "./utils";
 import { ModuleListResponse } from "../Models/ModuleListResponse";
 import { SimpleStatusCodeResponseModel } from "../Models/SimpleStatusCodeResponseModel";
 import { ModuleResponse } from "../Models/ModuleResponse";
@@ -67,7 +67,15 @@ const MODULE_ERROR_RESPONSE = RESPONSESTRINGS.errorRepsonse.modules
 const getModules = (async (queryParams={}, options={}) => {
         const url = new URL(API_HOST)
         const errorString = MODULE_ERROR_RESPONSE.getModules[client.language]
-        return apiRequest(url, "GET", ModuleListResponse, SimpleStatusCodeResponseModel, errorString, queryParams, options)
+        const _requestParams = new ApiRequest({
+            url: url, 
+            successResponseClass: ModuleListResponse, 
+            errorResponseClass: SimpleStatusCodeResponseModel, 
+            errorString: errorString, 
+            queryParams: queryParams, 
+            options:options
+        })
+        return _requestParams.getRequest()
     })
 
 /**
@@ -84,7 +92,15 @@ const getModules = (async (queryParams={}, options={}) => {
 const getModule = (async (grassmodule, options={}) => {
         const url = new URL(`${API_HOST}/${grassmodule}`)
         const errorString = MODULE_ERROR_RESPONSE.getModule[client.language]
-        return apiRequest(url, "POST", ModuleResponse, SimpleStatusCodeResponseModel, errorString, options)
+        const _requestParams = new ApiRequest({
+            url: url,
+            method: "GET",
+            successResponseClass: ModuleResponse, 
+            errorResponseClass: SimpleStatusCodeResponseModel, 
+            errorString: errorString, 
+            options:options
+        })
+        return _requestParams.getRequest()
     })
 
 

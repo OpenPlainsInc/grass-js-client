@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Tue Sep 06 2022
+ * Last Modified: Tue Sep 13 2022
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -43,11 +43,12 @@ import { ModuleParameterSchemaResponse } from "./ModuleParameterSchemaResponse";
      * @param {Object}
      * @param {String} name A unique name for the parameter. 
      * @param {String} description Detailed description to fully explain the entity.
-     * @param {Boolean} [optional = true] The parameter of the executable
-     * @param {String} defaultValue The default value for this parameter.
      * @param {ModuleParameterSchemaResponse} schema A list of parameters that are applicable for this process.
+     * @param {Boolean} [optional = true] The parameter of the executable
+     * @param {String} [defaultValue = undefined] The default value for this parameter.
+     
      */
-    constructor({name, description, optional=true, defaultValue, schema}) {
+    constructor({name, description, schema, optional=true, defaultValue=undefined}) {
         this.name = name;
         this.description = description;
         this.optional = optional;
