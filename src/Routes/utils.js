@@ -52,24 +52,45 @@ export class ApiRequest {
         this.options = options;
     }
 
+    /**
+     * Make a GET request
+     * @method
+     * @returns {Promise<*>} - Returns a promise that resolves to the successResponseClass.
+     */
     async getRequest() {
         let _requestOptions = this;
         _requestOptions.method = "GET";
         return await _apiRequest(_requestOptions)
     }
 
+
+    /**
+     * Make a POST request
+     * @method
+     * @returns {Promise<*>} - Returns a promise that resolves to the successResponseClass.
+     */
     async postRequest() {
         let _requestOptions = this;
         _requestOptions.method = "POST";
         return await _apiRequest(_requestOptions)
     }
 
+    /**
+     * Make a PUT request
+     * @method
+     * @returns {Promise<*>} - Returns a promise that resolves to the successResponseClass.
+     */
     async putRequest() {
         let _requestOptions = this;
         _requestOptions.method = "PUT";
         return await _apiRequest(_requestOptions)
     }
 
+    /**
+     * Make a DELETE request
+     * @method
+     * @returns {Promise<*>} - Returns a promise that resolves to the successResponseClass.
+     */
     async deleteRequest() {
         let _requestOptions = this;
         _requestOptions.method = "DELETE";
@@ -79,6 +100,7 @@ export class ApiRequest {
 
 /**
  * A helper class to make API requests.
+ * @private
  * @function
  * @async
  * @param {ApiRequest|Object} options
@@ -89,7 +111,7 @@ export class ApiRequest {
  * @param {string} options.errorString - A string representing the error message.
  * @param {Object} [options.queryParams = {}] - An object containing the query string parameter.
  * @param {Object} [options.options = {}] - An optional request object parameters set to fetch.
- * @returns 
+ * @returns {Promise<*>} - Returns a promise that resolves to the successResponseClass.
  */
 const _apiRequest = (async ({url, method, successResponseClass, errorResponseClass, errorString, queryParams={}, options={}}) => {
     try {
