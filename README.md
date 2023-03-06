@@ -1,5 +1,7 @@
 # (In Development) grass-js-client
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7703014.svg)](https://doi.org/10.5281/zenodo.7703014)
+
 [![build](https://github.com/tomorrownow/grass-js-client/actions/workflows/node.js.yml/badge.svg)](https://github.com/tomorrownow/grass-js-client/actions/workflows/node.js.yml)
 
 A JavaScript REST API client for django-actinia or Actinia REST APIs.
