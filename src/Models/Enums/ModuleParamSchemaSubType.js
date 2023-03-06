@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Tue Sep 06 2022
+ * Last Modified: Mon Mar 06 2023
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -41,7 +41,10 @@ export class ModuleParamSchemaSubType {
     static grid3 = new ModuleParamSchemaSubType('grid3');
     static file = new ModuleParamSchemaSubType('file');
     static dir = new ModuleParamSchemaSubType('dir');
-
+    static dbdriver = new ModuleParamSchemaSubType('dbdriver');
+    static color = new ModuleParamSchemaSubType('color');
+    static stds = new ModuleParamSchemaSubType('stds');
+    
     constructor(name) {
         this.name = name;
     }
