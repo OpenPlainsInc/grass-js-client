@@ -1,17 +1,17 @@
 # (In Development) grass-js-client
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7703014.svg)](https://doi.org/10.5281/zenodo.7703014)
-[![build](https://github.com/tomorrownow/grass-js-client/actions/workflows/node.js.yml/badge.svg)](https://github.com/tomorrownow/grass-js-client/actions/workflows/node.js.yml)
+[![build](https://github.com/openplainsinc/grass-js-client/actions/workflows/node.js.yml/badge.svg)](https://github.com/openplainsinc/grass-js-client/actions/workflows/node.js.yml)
 
 A JavaScript REST API client for django-actinia or Actinia REST APIs.
 
 ## Getting Started
 
-grass-js-client works with [django-actinia](https://github.com/tomorrownow/django-actinia) and [Actinia 4.2.1](https://github.com/mundialis/actinia_core).
+grass-js-client works with [django-actinia](https://github.com/openplainsinc/django-actinia) and [Actinia 4.2.1](https://github.com/mundialis/actinia_core).
 
 ## Documentation
 
-[https://tomorrownow.github.io/grass-js-client/](https://tomorrownow.github.io/grass-js-client/)
+[https://openplainsinc.github.io/grass-js-client/](https://openplainsinc.github.io/grass-js-client/)
 
 ### Install
 
