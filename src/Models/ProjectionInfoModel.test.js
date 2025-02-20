@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Mon Sep 12 2022
+ * Last Modified: Wed Feb 19 2025
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -34,7 +34,6 @@ import { ProjectionInfoModel } from './ProjectionInfoModel';
 import { EpsgSearchResponse } from './EpsgSearchResponse';
 import { EpsgInfo } from './EpsgInfo';
 
-
 function setupFetchStub(data) {
     return function fetchStub() {
       return new Promise((resolve) => {
@@ -49,8 +48,7 @@ function setupFetchStub(data) {
   }
 
 const MOCK_EPSG_RESPONSE = {
-    "status": "ok", 
-    "number_result": 1, 
+    "total": 1, 
     "results": [
         {
             "code": "4326",
@@ -85,15 +83,19 @@ describe("ProjectionInfoModel", ()=> {
         expect(typeof projectionInfo.projectionDetails).toBe('object')
     })
 
+    test("ProjectionInfoModel.fetchDetails() returns a Promise", ()=> {
+        expect(projectionInfo.fetchDetails() instanceof Promise).toBeTruthy()
+    })
+
     test('ProjectionInfoModel.searchEpsg(4326) searches epsg.io and returns data', async () => {
-        
+
         global.fetch = jest.fn().mockImplementation(setupFetchStub(MOCK_EPSG_RESPONSE))
         const json = await ProjectionInfoModel.searchEpsg(wgs84.epsg)
         expect(json instanceof EpsgSearchResponse).toBeTruthy()
+        expect(json.results).toEqual(MOCK_EPSG_RESPONSE.results)
         expect(json.results.length).toEqual(1)
         expect(json.results[0] instanceof EpsgInfo).toBeTruthy()
         global.fetch.mockClear()
         delete global.fetch
+        })
     })
-})
-
