@@ -5,7 +5,7 @@
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Mon Sep 12 2022
+ * Last Modified: Wed Feb 19 2025
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -37,63 +37,51 @@ import { EpsgSearchResponse } from "./EpsgSearchResponse";
  * Actinia class mapping representing the schema to define projection information as JSON input in POST requests
  */
 export class ProjectionInfoModel {
-    static EPSGIO_BASE_URL = "https://epsg.io/"
+    static MAPTILER_BASE_URL = "https://api.maptiler.com/";
+
     /**
      * Create a ProjectionInfoModel instance
-     * @param {Object}
-     * @param {String} epsg The EPSG code of the projection that should be used to create a location.
+     * @param {Object} param0
+     * @param {String} param0.epsg The EPSG code of the projection that should be used to create a location.
      */
-    constructor({epsg}) {
+    constructor({ epsg }) {
         this.epsg = epsg;
-        this.projectionDetails = {}
+        this.projectionDetails = {};
     }
 
     /**
      * Fetch details about projection from epsg.io
-     * @returns ProjectionInfoModel with parameter projectionDetails containing projection details 
+     * @returns {Promise<ProjectionInfoModel>} ProjectionInfoModel with parameter projectionDetails containing projection details 
      */
     async fetchDetails() {
-        let epsg = this.epsg
-        const results = await ProjectionInfoModel.searchEpsg(epsg).results;
-      
-        if (results) {
-            this.projectionDetails = results.map(result => {
-                let projDetails = {};
-                if (result) {
-                    const code = result.code;
-                    const name = result.name;
-                    const proj4def = result.proj4;
-                    const bbox = result.bbox;
-      
-                    if (code && code.length > 0 && proj4def && proj4def.length > 0 && bbox && bbox.length === 4) {
-                        projDetails = {
-                            code,
-                            name,
-                            proj4def,
-                            bbox
-                        }
-                    }  
-                }
-                return projDetails;
-            })
+        const response = await ProjectionInfoModel.searchEpsg(this.epsg);
+
+        if (response.results) {
+            this.projectionDetails = response.results
+                .filter(result => result && result.id.code && result.exports.proj4 && result.bbox && result.bbox.length === 4)
+                .map(result => ({
+                    code: result.id.code,
+                    name: result.name,
+                    proj4def: result.exports.proj4,
+                    bbox: result.bbox
+                }));
         }
-        return this
+        return this;
     }
 
     /**
      * Search for details for a specific epsg code.
      * @param {String} epsg 
-     * @returns {EpsgSearchResponse} Repsone from epsg.io or error response.
+     * @returns {Promise<EpsgSearchResponse>} Response from epsg.io or error response.
      */
     static async searchEpsg(epsg) {
+        const searchPath = "/coordinates/search/";
         try {
-            const url = new URL(`${this.EPSGIO_BASE_URL}?format=json&q=${epsg}`)
+            const url = new URL(`${this.MAPTILER_BASE_URL}${searchPath}${epsg}.json`);
             const res = await fetch(url);
             const data = await res.json();
-            const response = await new EpsgSearchResponse({...data})
-            return response
-        }
-        catch (e) {
+            return new EpsgSearchResponse(data);
+        } catch (e) {
             return e;
         }
     }

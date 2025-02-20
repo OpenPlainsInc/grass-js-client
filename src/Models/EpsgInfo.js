@@ -1,11 +1,11 @@
 /*
  * Filename: EpsgInfo.js
- * Project: TomorrowNow
+ * Project: OpenPlains
  * File Created: Thursday May 26th 2022
  * Author: Corey White (smortopahri@gmail.com)
  * Maintainer: Corey White
  * -----
- * Last Modified: Thu May 26 2022
+ * Last Modified: Wed Feb 19 2025
  * Modified By: Corey White
  * -----
  * License: GPLv3
@@ -33,32 +33,22 @@
 /**
  * Class representing espg info return by epsg.io query.
  */
- export class EpsgInfo {
+export class EpsgInfo {
     /**
      * Create an EpsgInfo
-     * @param {String} code - The epsg code
-     * @param {String} kind - The kind of projection e.g. CRS-GEOGCRS
-     * @param {Array | String} [bbox = ""] - The bounding box of the projection e.g. [90, -180, -90, 180]
-     * @param {String} [wkt = ""] - The wkt represention of the projection
-     * @param {String} [unit = ""] - The measurment unit e.g. degree, meter, feet.
-     * @param {String} [proj4 = ""] - The proj4 representation e.g. +proj=longlat +datum=WGS84 +no_def
-     * @param {String} [name = ""] - The projection name. e.g. WGS 84
-     * @param {String} [area = ""] - The area of the projection e.g. World.
-     * @param {Number} [default_trans = 0] - Default transform coordinates.
-     * @param {Array} [trans = []] - Array of transform coordinates
-     * @param {String} [accuracy = ""] - The accuracy
+     * @param {Object} data - The data object containing EPSG information
      */
-    constructor({code, kind, bbox = "", wkt = "", unit = "", proj4 ="", name = "", area = "", default_trans = 0, trans = [], accuracy}) {
-        this.code = code;
-        this.kind = kind;
-        this.bbox = Array.isArray(bbox) ? bbox : null;
-        this.wkt = wkt;
-        this.unit = unit;
-        this.proj4 = proj4;
-        this.name = name;
-        this.area = area;
-        this.defaultTrans = default_trans;
-        this.trans = [...trans];
-        this.accuracy = accuracy;
+    constructor(data) {
+        this.code = data.id.code;
+        this.kind = data.kind;
+        this.bbox = Array.isArray(data.bbox) ? data.bbox : null;
+        this.wkt = data.exports.wkt;
+        this.unit = data.unit;
+        this.proj4 = data.exports.proj4;
+        this.name = data.name;
+        this.area = data.area;
+        this.defaultTrans = data.default_transformation.code;
+        this.trans = [...data.transformations];
+        this.accuracy = data.accuracy;
     }
 }
